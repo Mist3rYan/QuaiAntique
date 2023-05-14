@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
 {
@@ -39,6 +40,11 @@ class Reservation
 
     #[ORM\Column(nullable: true)]
     private array $visiteur_allergene = [];
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -128,5 +134,5 @@ class Reservation
 
         return $this;
     }
-    
+
 }

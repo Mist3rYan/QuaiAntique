@@ -12,8 +12,10 @@ use App\Entity\Allergene;
 use App\Entity\Categorie;
 use App\Entity\Calendrier;
 use App\Entity\Reservation;
+use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
@@ -304,8 +306,17 @@ class AppFixtures extends Fixture
             $reservation->setVisiteurNbConvive($this->faker->numberBetween(1, 10));
             $reservation->setDate(new \DateTimeImmutable('2023-07-01'));
             $reservation->setHeure(12.15);
-            $reservation->setCreatedAt(new \DateTimeImmutable('2021-05-14'));
             $manager->persist($reservation);
+        }
+
+        for($i=0; $i<5; $i++){
+            $user = new User();
+            $user->setNom($this->faker->name());
+            $user->setEmail($this->faker->email());
+            $user->setRoles(['ROLE_USER']);
+            $user->setPlainPassword('password'); // 'password
+
+            $manager->persist($user);
         }
 
         $manager->flush();
