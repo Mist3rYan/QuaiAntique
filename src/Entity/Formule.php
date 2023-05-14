@@ -6,8 +6,10 @@ use App\Repository\FormuleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: FormuleRepository::class)]
+#[UniqueEntity('titre')]
 class Formule
 {
     #[ORM\Id]

@@ -7,8 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert; // Ajouté pour la validation des données
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity; // Ajouté pour la validation des données
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[UniqueEntity('nom')]
 class Categorie
 {
     #[ORM\Id]

@@ -16,19 +16,16 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min:3, max:250)]
+    #[Assert\Length(min: 3, max: 250)]
     private ?string $visiteur_name = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min:3, max:250)]
+    #[Assert\Length(min: 3, max: 250)]
     private ?string $visiteur_email = null;
 
     #[ORM\Column]
     #[Assert\Positive(message: 'Le nombre de convive doit être supérieur à 0.')]
     private ?int $visiteur_nb_convive = null;
-
-    #[ORM\Column(type: Types::JSON)]
-    private array $visiteur_allergene = [];
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Assert\NotNull(message: 'La date ne peut pas être vide.')]
@@ -39,6 +36,9 @@ class Reservation
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private array $visiteur_allergene = [];
 
     public function getId(): ?int
     {
@@ -81,18 +81,6 @@ class Reservation
         return $this;
     }
 
-    public function getVisiteurAllergene(): array
-    {
-        return $this->visiteur_allergene;
-    }
-
-    public function setVisiteurAllergene(array $visiteur_allergene): self
-    {
-        $this->visiteur_allergene = $visiteur_allergene;
-
-        return $this;
-    }
-
     public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
@@ -129,4 +117,16 @@ class Reservation
         return $this;
     }
 
+    public function getVisiteurAllergene(): array
+    {
+        return $this->visiteur_allergene;
+    }
+
+    public function setVisiteurAllergene(?array $visiteur_allergene): self
+    {
+        $this->visiteur_allergene = $visiteur_allergene;
+
+        return $this;
+    }
+    
 }
