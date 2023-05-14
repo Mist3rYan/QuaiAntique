@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PlatRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PlatRepository::class)]
 class Plat
@@ -15,18 +16,23 @@ class Plat
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:3, max:250)]
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotNull(message: 'La description ne peut pas être vide.')]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\Positive(message: 'Le prix doit être supérieur à 0.')]
     private ?float $prix = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:3, max:250)]
     private ?string $file_image = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:3, max:250)]
     private ?string $title_image = null;
 
     #[ORM\Column]

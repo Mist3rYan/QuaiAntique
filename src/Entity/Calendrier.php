@@ -6,6 +6,7 @@ use App\Repository\CalendrierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert; // Ajouté pour la validation des données
 
 #[ORM\Entity(repositoryClass: CalendrierRepository::class)]
 class Calendrier
@@ -16,6 +17,7 @@ class Calendrier
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:3, max:250)]
     private ?string $jour = null;
 
     #[ORM\Column]

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -15,18 +16,22 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:3, max:250)]
     private ?string $visiteur_name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:3, max:250)]
     private ?string $visiteur_email = null;
 
     #[ORM\Column]
+    #[Assert\Positive(message: 'Le nombre de convive doit être supérieur à 0.')]
     private ?int $visiteur_nb_convive = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
+    #[ORM\Column(type: Types::JSON)]
     private array $visiteur_allergene = [];
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\NotNull(message: 'La date ne peut pas être vide.')]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column]

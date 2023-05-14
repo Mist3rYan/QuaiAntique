@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AllergeneRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AllergeneRepository::class)]
 class Allergene
@@ -14,6 +15,7 @@ class Allergene
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min:3, max:250)]
     private ?string $nom = null;
 
     public function getId(): ?int

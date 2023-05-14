@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CouvertRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CouvertRepository::class)]
 class Couvert
@@ -14,6 +15,7 @@ class Couvert
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\Positive(message: 'Le nombre de couverts doit être supérieur à 0.')]
     private ?int $nb_couvert = null;
 
     public function getId(): ?int
