@@ -1,1 +1,60 @@
 @import "node_modules/bootstrap/scss/bootstrap";
+//Font
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+//Couleurs
+$jet: #333333;
+$safron: #f2c63d;
+$jasper: #d44638;
+$tiffanyBlue: #8bcbce;
+$quinacridoneMagenta: #7a3f54;
+
+body {
+  font-family: "Lato", sans-serif;
+  font-size: 1.2rem;
+  background-color: $jet;
+  color: $safron;
+}
+
+div#offcanvasNavbar{
+  background-color: $jet;
+}
+
+.navbar-toggler {
+  border-color: $tiffanyBlue;
+  border-width: 2px;
+}
+
+.navbar-brand {
+  font-family: "Abril Fatface", serif;
+  font-size: 2rem;
+  color: $safron;
+}
+
+.nav-link {
+  color: $safron;
+}
+
+.nav-link:hover {
+  color: $tiffanyBlue;
+}
+
+.pied-de-page {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem; /* Hauteur du pied-de-page */
+}
+
+h1 {
+  color: $jasper;
+  font-family: "Abril Fatface", serif;
+}
+
+.conteneur-page {
+  position: relative;
+  min-height: 100vh;
+}
+
+@media (min-width: 992px) {
+}
