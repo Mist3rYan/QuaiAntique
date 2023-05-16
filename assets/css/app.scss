@@ -20,8 +20,21 @@ div#offcanvasNavbar{
   background-color: $jet;
 }
 
+.btnNavbar{
+  width: 100%;
+  background-color: $jet;
+  border: 2px solid $safron;
+  color: $safron;
+  margin-top: 5%;
+}
+
+.btnNavbar:hover{
+  background-color: $jasper;
+  color: $jet;
+}
+
 .navbar-toggler {
-  border-color: $tiffanyBlue;
+  border-color: $safron;
   border-width: 2px;
 }
 
@@ -36,7 +49,7 @@ div#offcanvasNavbar{
 }
 
 .nav-link:hover {
-  color: $tiffanyBlue;
+  color: $jasper;
 }
 
 .pied-de-page {
@@ -46,15 +59,40 @@ div#offcanvasNavbar{
   height: 2.5rem; /* Hauteur du pied-de-page */
 }
 
-h1 {
+h1, h2{
   color: $jasper;
   font-family: "Abril Fatface", serif;
 }
+
 
 .conteneur-page {
   position: relative;
   min-height: 100vh;
 }
 
+.conteneurTransparent{
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  border-radius: 5px;
+}
+
 @media (min-width: 992px) {
+  li.nav-item.hiddenLi {
+    display: none;
+  }
+
+  .btnNavbar{
+    margin-top: auto;
+  }
+  .nav-item{
+    margin-right: 10px;
+  }
+
+  .link-footer {
+    color: $tiffanyBlue;
+    text-decoration: none;
+  }
+  .link-footer:hover {
+    color: $jasper;
+  }
 }
