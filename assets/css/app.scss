@@ -12,15 +12,19 @@ $quinacridoneMagenta: #7a3f54;
 body {
   font-family: "Lato", sans-serif;
   font-size: 1.2rem;
-  background-color: $jet;
   color: $safron;
+  background-color: $quinacridoneMagenta;
 }
 
-div#offcanvasNavbar{
+div#offcanvasNavbar {
   background-color: $jet;
 }
 
-.btnNavbar{
+.navbar {
+  background-color: $jet;
+}
+
+.btnNavbar {
   width: 100%;
   background-color: $jet;
   border: 2px solid $safron;
@@ -28,9 +32,10 @@ div#offcanvasNavbar{
   margin-top: 5%;
 }
 
-.btnNavbar:hover{
-  background-color: $jasper;
+.btnNavbar:hover {
+  background-color: $safron;
   color: $jet;
+  border: 2px solid $jet;
 }
 
 .navbar-toggler {
@@ -52,44 +57,41 @@ div#offcanvasNavbar{
   color: $jasper;
 }
 
-.pied-de-page {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem; /* Hauteur du pied-de-page */
-}
-
-h1, h2{
-  color: $jasper;
+h1,
+h2,
+h3 {
   font-family: "Abril Fatface", serif;
 }
-
 
 .conteneur-page {
   position: relative;
   min-height: 100vh;
 }
 
-.conteneurTransparent{
+.conteneurTransparent {
   background-color: rgba(0, 0, 0, 0.2);
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 @media (min-width: 992px) {
   li.nav-item.hiddenLi {
     display: none;
   }
-
-  .btnNavbar{
+  .footer {
+    background-color: $jet;
+    color: $safron;
+  }
+  .btnNavbar {
     margin-top: auto;
   }
-  .nav-item{
+  .nav-item {
     margin-right: 10px;
   }
 
   .link-footer {
-    color: $tiffanyBlue;
+    color: $safron;
     text-decoration: none;
   }
   .link-footer:hover {
