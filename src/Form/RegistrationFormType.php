@@ -8,30 +8,103 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email',EmailType::class)
-            ->add('nom', TextType::class)
-            ->add('nombre_convive', IntegerType::class,[
-                'label' => 'Nombre de convive',
+            ->add('nom', TextType::class,[
                 'attr' => [
+                    'class' => 'form-control',
+                    'minlength' => 5,
+                    'maxlength' => 180,
+                ],
+                'label' => 'Nom',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length([
+                        'min' => 5,
+                        'max' => 180,
+                    ]),
+                ],
+            ]
+            )
+            ->add('nombre_convive', IntegerType::class, [
+                'label' => 'Nombre de convive',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'attr' => [
+                    'class' => 'form-control',
                     'min' => 1,
                     'max' => 10,
                     'step' => 1
                 ]
             ])
+            ->add(
+                'email',
+                EmailType::class,
+                [
+                    'attr' => [
+                        'class' => 'form-control',
+                        'minlength' => 5,
+                        'maxlength' => 180,
+                    ],
+                    'label' => 'Email',
+                    'label_attr' => [
+                        'class' => 'form-label mt-4'
+                    ],
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                        new Assert\Email(),
+                        new Assert\Length([
+                            'min' => 5,
+                            'max' => 180,
+                        ]),
+                    ],
+                ]
+            )
+            ->add('plainpassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'label' => 'Mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label mt-4'
+                    ],
+                    'attr' => [
+                        'class' => 'form-control',
+                    ],
+                ],
+                'second_options' => [
+                    'label' => 'Confirmer le mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label mt-4'
+                    ],
+                    'attr' => [
+                        'class' => 'form-control mb-4',
+                    ],
+                ],
+                'invalid_message' => 'Les mots de passe ne correspondent pas',
+            ])
             ->add('agreeTerms', CheckboxType::class, [
+                'attr' => [
+                    'class' => 'form-check-input pl-2',
+                ],
                 'label' => 'J\'accepte la politique de confidentialité',
+                'label_attr' => [
+                    'class' => 'form-label'
+                ],
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
@@ -39,23 +112,13 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
+            ->add('submit', SubmitType::class, [
+                'label' => 'S\'inscrire',
+                'attr' => [
+                    'class' => 'btn btnNavbar mt-4'
                 ],
             ]);
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
