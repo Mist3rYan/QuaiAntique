@@ -36,19 +36,24 @@ class AppFixtures extends Fixture
             $calendrier = new Calendrier();
             $calendrier->setJour($jour);
             if($jour ===  'Lundi'){
-                $calendrier->setOuvertureMidi(00.00);
-                $calendrier->setFermetureMidi(00.00);
+                $calendrier->setOMidi(null);
+                $calendrier->setFMidi(null);
             }
             else{
-                $calendrier->setOuvertureMidi(12.00);
-                $calendrier->setFermetureMidi(14.00);
+                $heure = new \DateTime('@'.strtotime('12:00'));
+                $calendrier->setOMidi($heure);
+                $heure = new \DateTime('@'.strtotime('14:00'));
+                $calendrier->setFMidi($heure);
             }
-            $calendrier->setOuvertureSoir(19.00);
+            $heure = new \DateTime('@'.strtotime('19:00'));
+            $calendrier->setOSoir($heure);
             if($jour === 'Samedi'){
-                $calendrier->setFermetureSoir(23.00);
+                $heure = new \DateTime('@'.strtotime('23:00'));
+                $calendrier->setFSoir($heure);
             }
             else{
-                $calendrier->setFermetureSoir(22.00);
+                $heure = new \DateTime('@'.strtotime('22:00'));
+                $calendrier->setFSoir($heure);
             }
             if($jour === 'Dimanche'){
                 $calendrier->setIsOpen(false);
@@ -317,6 +322,13 @@ class AppFixtures extends Fixture
 
             $manager->persist($user);
         }
+        $user = new User();
+        $user->setNom('admin');
+        $user->setEmail('admin@quaiantique.fr');
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setPlainPassword('password'); // 'password
+
+        $manager->persist($user);
 
         $manager->flush();
     }

@@ -3,22 +3,52 @@
 	class="pied-de-page d-none d-lg-inline">
 	<!-- Copyright -->
 	<div class="row footer mt-4">
-		<div class="col-4 text-center">
-			<div class="row">
-				<a class="link-footer" href="{{path('app_mentions_legales')}}">Mentions légales</a>
+		<div class="col-5 d-flex  align-items-center justify-content-center">
+			<table>
+			<tr><th class= "text-center" colspan="3" ><h4 >Horaires</h4></th></tr>
+				{% for calendrier in calendriers %}
+					<tr>
+						<th>{{ calendrier.jour }}</th>
+						{% if calendrier.isIsOpen %}
+							{% if calendrier.getOMidi != null %}
+								{% if calendrier.getFMidi != null %}
+									<td  style="padding:0 15px 0 0;">{{ calendrier.getOMidi|date('H:i') }}
+										-
+										{{ calendrier.getFMidi|date('H:i') }}</td>
+								{% endif %}
+							{% endif %}
+							{% if calendrier.getOSoir != null %}
+								{% if calendrier.getFSoir != null %}
+									<td>{{ calendrier.getOSoir|date('H:i') }}
+										-
+										{{ calendrier.getFSoir|date('H:i') }}</td>
+								{% endif %}
+							{% endif %}
+						{% else %}
+							<td class= "text-center" colspan="2" >Fermé</td>
+						{% endif %}
+						</tr>
+					{% endfor %}
+				</table>
+
 			</div>
-			<div class="row">
-				<a class="link-footer" href="{{path('app_politique_de_confidentialite')}}">Politique de Confidentialité</a>
+			<div class="col-2 d-flex flex-column align-items-center justify-content-center">
+				<div class="row"><img src="{{ asset('images/cheflogo.png') }}" height="70" alt="Quai antique">
+				</div>
+				<div class="row">
+				&copy; 2023
+				</div>	
 			</div>
-			<div class="row">
-				<a class="link-footer" href="#">Crédits</a>
+			<div class="col-5 d-flex flex-column align-items-center justify-content-center">
+				<div class="row">
+					<a class="link-footer" href="{{path('app_mentions_legales')}}">Mentions légales</a>
+				</div>
+				<div class="row">
+					<a class="link-footer" href="{{path('app_politique_de_confidentialite')}}">Politique de Confidentialité</a>
+				</div>
+				<div class="row">
+					<a class="link-footer" href="#">Crédits</a>
+				</div>
 			</div>
-		</div>
-		<div class="col-4 d-flex align-items-center justify-content-center">
-			&copy; Quai Antique 2023
-		</div>
-		<div class="col-4 d-flex align-items-center justify-content-center"></div>
-	</div>
-	<!-- Copyright -->
-</footer>
-<!-- Footer -->
+		</div><!-- Copyright --></footer>
+	<!-- Footer -->

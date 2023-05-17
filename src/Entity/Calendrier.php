@@ -3,14 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\CalendrierRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert; // Ajouté pour la validation des données
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity; // Ajouté pour la validation des données
 
 #[ORM\Entity(repositoryClass: CalendrierRepository::class)]
-#[UniqueEntity('jour')]
 class Calendrier
 {
     #[ORM\Id]
@@ -19,31 +15,22 @@ class Calendrier
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min:3, max:250)]
     private ?string $jour = null;
 
-    #[ORM\Column]
-    private ?float $ouverture_midi = null;
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $o_midi = null;
 
-    #[ORM\Column]
-    private ?float $fermeture_midi = null;
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $f_midi = null;
 
-    #[ORM\Column]
-    private ?float $ouverture_soir = null;
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $o_soir = null;
 
-    #[ORM\Column]
-    private ?float $fermeture_soir = null;
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $f_soir = null;
 
     #[ORM\Column]
     private ?bool $is_open = null;
-
-    #[ORM\OneToMany(mappedBy: 'calendrier', targetEntity: Reservation::class)]
-    private Collection $reservations;
-
-    public function __construct()
-    {
-        $this->reservations = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -62,50 +49,50 @@ class Calendrier
         return $this;
     }
 
-    public function getOuvertureMidi(): ?float
+    public function getOMidi(): ?\DateTimeInterface
     {
-        return $this->ouverture_midi;
+        return $this->o_midi;
     }
 
-    public function setOuvertureMidi(float $ouverture_midi): self
+    public function setOMidi(?\DateTimeInterface $o_midi): self
     {
-        $this->ouverture_midi = $ouverture_midi;
+        $this->o_midi = $o_midi;
 
         return $this;
     }
 
-    public function getFermetureMidi(): ?float
+    public function getFMidi(): ?\DateTimeInterface
     {
-        return $this->fermeture_midi;
+        return $this->f_midi;
     }
 
-    public function setFermetureMidi(float $fermeture_midi): self
+    public function setFMidi(?\DateTimeInterface $f_midi): self
     {
-        $this->fermeture_midi = $fermeture_midi;
+        $this->f_midi = $f_midi;
 
         return $this;
     }
 
-    public function getOuvertureSoir(): ?float
+    public function getOSoir(): ?\DateTimeInterface
     {
-        return $this->ouverture_soir;
+        return $this->o_soir;
     }
 
-    public function setOuvertureSoir(float $ouverture_soir): self
+    public function setOSoir(?\DateTimeInterface $o_soir): self
     {
-        $this->ouverture_soir = $ouverture_soir;
+        $this->o_soir = $o_soir;
 
         return $this;
     }
 
-    public function getFermetureSoir(): ?float
+    public function getFSoir(): ?\DateTimeInterface
     {
-        return $this->fermeture_soir;
+        return $this->f_soir;
     }
 
-    public function setFermetureSoir(float $fermeture_soir): self
+    public function setFSoir(?\DateTimeInterface $f_soir): self
     {
-        $this->fermeture_soir = $fermeture_soir;
+        $this->f_soir = $f_soir;
 
         return $this;
     }
@@ -120,13 +107,5 @@ class Calendrier
         $this->is_open = $is_open;
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, Reservation>
-     */
-    public function getReservations(): Collection
-    {
-        return $this->reservations;
     }
 }

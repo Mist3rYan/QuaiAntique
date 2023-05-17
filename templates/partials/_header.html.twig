@@ -1,7 +1,7 @@
 <nav class="haut-de-page navbar navbar-expand-lg">
 	<div class="container-fluid m">
 		<a class="navbar-brand" href="{{path('app_home')}}">
-		<img src="{{ asset('images/cheflogo.png') }}" height="70" alt="Quai antique">
+			<img src="{{ asset('images/cheflogo.png') }}" height="70" alt="Quai antique">
 		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -47,6 +47,38 @@
 							<li class="nav-item">
 								<a class="btn btnNavbar" href="{{path('app_logout')}}">Déconnexion</a>
 							</li>
+							<li class="nav-item hiddenLi">
+								<table>
+									<tr>
+										<th class="text-center" colspan="3">
+											<h4>Horaires</h4>
+										</th>
+									</tr>
+									{% for calendrier in calendriers %}
+										<tr>
+											<th>{{ calendrier.jour }}</th>
+											{% if calendrier.isIsOpen %}
+												{% if calendrier.getOMidi != null %}
+													{% if calendrier.getFMidi != null %}
+														<td style="padding:0 15px 0 0;">{{ calendrier.getOMidi|date('H:i') }}
+															-
+															{{ calendrier.getFMidi|date('H:i') }}</td>
+													{% endif %}
+												{% endif %}
+												{% if calendrier.getOSoir != null %}
+													{% if calendrier.getFSoir != null %}
+														<td>{{ calendrier.getOSoir|date('H:i') }}
+															-
+															{{ calendrier.getFSoir|date('H:i') }}</td>
+													{% endif %}
+												{% endif %}
+											{% else %}
+												<td class="text-center" colspan="2">Fermé</td>
+											{% endif %}
+										</tr>
+									{% endfor %}
+								</table>
+							</li>
 						{% endif %}
 					{% else %}
 						<li class="nav-item">
@@ -72,6 +104,38 @@
 						</li>
 						<li class="nav-item">
 							<a class="btn btnNavbar" href="{{path('app_login')}}">Se connecter</a>
+						</li>
+						<li class="nav-item hiddenLi mt-5">
+							<table>
+								<tr>
+									<th class="text-center" colspan="3">
+										<h4>Horaires</h4>
+									</th>
+								</tr>
+								{% for calendrier in calendriers %}
+									<tr>
+										<th>{{ calendrier.jour }}</th>
+										{% if calendrier.isIsOpen %}
+											{% if calendrier.getOMidi != null %}
+												{% if calendrier.getFMidi != null %}
+													<td style="padding:0 15px 0 0;">{{ calendrier.getOMidi|date('H:i') }}
+														-
+														{{ calendrier.getFMidi|date('H:i') }}</td>
+												{% endif %}
+											{% endif %}
+											{% if calendrier.getOSoir != null %}
+												{% if calendrier.getFSoir != null %}
+													<td>{{ calendrier.getOSoir|date('H:i') }}
+														-
+														{{ calendrier.getFSoir|date('H:i') }}</td>
+												{% endif %}
+											{% endif %}
+										{% else %}
+											<td class="text-center" colspan="2">Fermé</td>
+										{% endif %}
+									</tr>
+								{% endfor %}
+							</table>
 						</li>
 					{% endif %}
 				</ul>
