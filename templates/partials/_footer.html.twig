@@ -12,7 +12,7 @@
 						{% if calendrier.isIsOpen %}
 							{% if calendrier.getOMidi != null %}
 								{% if calendrier.getFMidi != null %}
-									<td  style="padding:0 15px 0 0;">{{ calendrier.getOMidi|date('H:i') }}
+									<td  >{{ calendrier.getOMidi|date('H:i') }}
 										-
 										{{ calendrier.getFMidi|date('H:i') }}</td>
 								{% endif %}

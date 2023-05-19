@@ -103,9 +103,9 @@ class AppFixtures extends Fixture
         $manager->persist($formule);
 
         $formule = new Formule();
-        $formule->setTitre('Formule Affaires');
-        $formule->setDescription('Entrée + Plat ou Plat + Dessert');
-        $formule->setPrix(24.50);
+        $formule->setTitre('Formule Enfants -10 ans');
+        $formule->setDescription('Plat + Dessert version enfant');
+        $formule->setPrix(10.95);
         $formule->setMenu($menu);
         $manager->persist($formule);
 

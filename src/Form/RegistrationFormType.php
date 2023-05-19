@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -20,25 +21,32 @@ class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $allergenes = [
+            'Gluten', 'Crustacés', 'Oeufs', 'Poissons','Arachides','Soja','Lait','Fruits à coque',
+            'Céleri','Moutarde','Graines de sésame','Sulfites','Lupin','Mollusques'];
+
         $builder
-            ->add('nom', TextType::class,[
-                'attr' => [
-                    'class' => 'form-control',
-                    'minlength' => 5,
-                    'maxlength' => 180,
-                ],
-                'label' => 'Nom',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length([
-                        'min' => 5,
-                        'max' => 180,
-                    ]),
-                ],
-            ]
+            ->add(
+                'nom',
+                TextType::class,
+                [
+                    'attr' => [
+                        'class' => 'form-control',
+                        'minlength' => 5,
+                        'maxlength' => 180,
+                    ],
+                    'label' => 'Nom',
+                    'label_attr' => [
+                        'class' => 'form-label mt-4'
+                    ],
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                        new Assert\Length([
+                            'min' => 5,
+                            'max' => 180,
+                        ]),
+                    ],
+                ]
             )
             ->add('nombre_convive', IntegerType::class, [
                 'label' => 'Nombre de convive',
@@ -97,11 +105,23 @@ class RegistrationFormType extends AbstractType
                 ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas',
             ])
+            ->add('allergenes', ChoiceType::class,array(
+                'multiple' => true,
+                'expanded' => true,
+                'mapped' => false,
+                'choices' => array('Gluten'=>'Gluten', 'Crustacés'=>'Crustacés', 'Oeufs'=>'Oeufs',
+                'Poissons'=>'Poissons','Arachides'=>'Arachides','Soja'=>'Soja','Lait'=>'Lait','Fruits à coque'=>'Fruits à coque',
+                'Céleri' =>'Céleri','Moutarde' =>'Moutarde','Graines de sésame' =>'Graines de sésame','Sulfites' =>'Sulfites',
+                'Lupin' =>'Lupin' ,'Mollusques' =>'Mollusques'),
+                'label_attr' => [
+                    'class' => 'form-label'
+                ]
+            ))
             ->add('agreeTerms', CheckboxType::class, [
                 'attr' => [
-                    'class' => 'form-check-input pl-2',
+                    'class' => 'form-check-input',
                 ],
-                'label' => 'J\'accepte la politique de confidentialité',
+                'label' => 'J\'accepte la politique de confidentialité ',
                 'label_attr' => [
                     'class' => 'form-label'
                 ],
@@ -117,8 +137,7 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'btn btnNavbar mt-4'
                 ],
-            ]);
-            ;
+            ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

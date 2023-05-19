@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carte
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-center">Carte</h1>
+		{% for menu in menus %}
+			<div class="conteneurTransparent mb-2">
+				<h3 class="text-center">{{ menu.getNom }}</h3>
+				<div class="conteneurTransparent">
+					{% for formule in formules %}
+						{% if formule.getMenu == menu %}
+							<strong>{{ formule.getTitre }}
+							-
+							{{ formule.getPrix }}€</strong><br>
+							{{ formule.getDescription }}
+							<br><br>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+		{% for categorie in categories %}
+			<div class="conteneurTransparent mb-2">
+				<h3 class="text-center">{{ categorie.getNom }}</h3>
+				<div class="conteneurTransparent">
+					{% for plat in plats %}
+						{% if plat.getCategorie == categorie %}
+							{{ plat.getTitre }} -
+                            {{ plat.getPrix }}€</br>
+							{{ plat.getDescription }}
+							<br><br>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\AllergeneRepository;
 use App\Security\UsersAuthenticator;
 use App\Repository\CalendrierRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,9 +21,10 @@ class RegistrationController extends AbstractController
     #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, 
     UserAuthenticatorInterface $userAuthenticator, UsersAuthenticator $authenticator, 
-    EntityManagerInterface $entityManager,CalendrierRepository $repositery): Response
+    EntityManagerInterface $entityManager,CalendrierRepository $repositery, AllergeneRepository $repositeryAller): Response
     {
         $calendriers = $repositery->findAll();
+        $allergenes = $repositeryAller->findAll();
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -44,6 +46,7 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
             'calendriers' => $calendriers,
+            'allergenes' => $allergenes,
         ]);
     }
 }
