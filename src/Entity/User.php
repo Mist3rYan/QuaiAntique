@@ -45,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Positive(message: 'Le nombre de convive doit être supérieur à 0.')]
     private ?int $nombre_convive = null;
 
+    #[ORM\Column(nullable: true)]
+    private array $allergenes = [];
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -173,6 +176,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    public function getAllergenes(): array
+    {
+        return $this->allergenes;
+    }
+
+    public function setAllergenes(?array $allergenes): self
+    {
+        $this->allergenes = $allergenes;
 
         return $this;
     }

@@ -1,20 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CreditsController!{% endblock %}
+{% block title %}Crédits
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/QuaiAntique/src/Controller/CreditsController.php'|file_link(0) }}">src/Controller/CreditsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/QuaiAntique/templates/credits/index.html.twig'|file_link(0) }}">templates/credits/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<div class="container">
+		<h1 class="text-center">Crédits</h1>
+		<div class="conteneurTransparent">
+			Un grand merci à tous ceux qui ont contribué à la réalisation de ce site web. 
+            Votre expertise et votre dévouement ont été essentiels pour créer cette expérience 
+            en ligne exceptionnelle. Nous tenons également à remercier nos partenaires, 
+            fournisseurs et précieux clients pour leur soutien continu. Votre confiance nous 
+            inspire à poursuivre notre engagement envers l'excellence. Merci à tous ! L'équipe 
+            de [nom de l'entreprise].
+		</div>
+        <div class="conteneurTransparent mt-4">
+        Photos : <a href="https://www.pexels.com/fr-fr/">Pexels</a>
+        </div>
+	</div>
 {% endblock %}

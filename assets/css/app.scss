@@ -79,6 +79,11 @@ label {
   padding: 10px;
 }
 
+a{
+  color: $tiffanyBlue;
+  text-decoration: none;
+}
+
 @media (min-width: 992px) {
   li.nav-item.hiddenLi {
     display: none;
