@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-        $allergenes = ['Gluten', 'Crustacés', 'Oeufs', 'Poissons', 'Arachides', 'Soja', 'Lait', 'Fruits à coque', 'Céleri', 'Moutarde', 'Graines de sésame', 'Sulfites', 'Lupin', 'Mollusques'];
+        $allergie = ['Gluten', 'Crustacés', 'Oeufs', 'Poissons', 'Arachides', 'Soja', 'Lait', 'Fruits à coque', 'Céleri', 'Moutarde', 'Graines de sésame', 'Sulfites', 'Lupin', 'Mollusques'];
         $categories = ['Entrée', 'Plat', 'Dessert', 'Boisson'];
 
         foreach ($jours as $jour) {
@@ -64,7 +64,7 @@ class AppFixtures extends Fixture
             $manager->persist($calendrier);
         }
 
-        foreach ($allergenes as $allergene) {
+        foreach ($allergie as $allergene) {
             $allergenes = new Allergene();
             $allergenes ->setNom($allergene);
             $manager->persist($allergenes);
@@ -303,13 +303,16 @@ class AppFixtures extends Fixture
         $plat->setIsFavorite(false);
         $manager->persist($plat);
 
+        $tableau = array();
         for($i=0; $i<5; $i++){
             $reservation = new Reservation();
             $reservation->setVisiteurName($this->faker->name());
             $reservation->setVisiteurEmail($this->faker->email());
             $reservation->setVisiteurNbConvive($this->faker->numberBetween(1, 10));
             $reservation->setDate(new \DateTimeImmutable('2023-07-01'));
-            $reservation->setHeure(12.15);
+            $reservation->setHeure(new \DateTimeImmutable('2023-07-01 12:15'));
+            array_push($tableau, $allergie[$i]);
+            $reservation->setVisiteurAllergene($tableau);
             $manager->persist($reservation);
         }
 
@@ -319,11 +322,10 @@ class AppFixtures extends Fixture
             $user->setEmail($this->faker->email());
             $user->setRoles(['ROLE_USER']);
             $user->setPlainPassword('password'); // 'password
-
+            $user->setAllergenes($tableau);
             $manager->persist($user);
         }
         $user = new User();
-        $user->setNom('admin');
         $user->setEmail('admin@quaiantique.fr');
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPlainPassword('password'); // 'password

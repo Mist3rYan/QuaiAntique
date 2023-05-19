@@ -16,7 +16,7 @@
 					{% if app.user %}
 						{% if app.user.roles[0] == 'ROLE_ADMIN' %}
 							<li class="nav-item">
-								<a class="nav-link" href="{{path('app_administration')}}">Administration</a>
+								<a class="nav-link" href="{{path('admin')}}">Administration</a>
 							</li>
 							<li class="nav-item">
 								<a class="btn btnNavbar" href="{{path('app_logout')}}">Déconnexion</a>

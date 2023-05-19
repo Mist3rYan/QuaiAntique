@@ -33,7 +33,7 @@ class Reservation
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column]
-    private ?float $heure = null;
+    private ?\DateTimeImmutable $heure = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -99,12 +99,12 @@ class Reservation
         return $this;
     }
 
-    public function getHeure(): ?float
+    public function getHeure(): ?\DateTimeImmutable
     {
         return $this->heure;
     }
 
-    public function setHeure(float $heure): self
+    public function setHeure(\DateTimeImmutable $heure): self
     {
         $this->heure = $heure;
 
