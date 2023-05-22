@@ -15,13 +15,6 @@ class AllergeneCrudController extends AbstractCrudController
     {
         return Allergene::class;
     }
-
-    public function configureActions(Actions $actions): Actions
-    {
-        return $actions
-            ->disable(Action::NEW, Action::EDIT, Action::DELETE);
-
-    }
     
     public function configureCrud(Crud $crud): Crud
     {

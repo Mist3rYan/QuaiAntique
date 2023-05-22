@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -45,12 +47,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Positive(message: 'Le nombre de convive doit être supérieur à 0.')]
     private ?int $nombre_convive = null;
 
-    #[ORM\Column(nullable: true)]
-    private array $allergenes = [];
+    #[ORM\ManyToMany(targetEntity: Allergene::class, inversedBy: 'users')]
+    private Collection $allergenes;
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->allergenes = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->nom;
     }
 
     public function getId(): ?int
@@ -180,15 +189,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAllergenes(): array
+    /**
+     * @return Collection<int, Allergene>
+     */
+    public function getAllergenes(): Collection
     {
         return $this->allergenes;
     }
 
-    public function setAllergenes(?array $allergenes): self
+    public function addAllergene(Allergene $allergene): self
     {
-        $this->allergenes = $allergenes;
-        
+        if (!$this->allergenes->contains($allergene)) {
+            $this->allergenes->add($allergene);
+        }
+
         return $this;
     }
+
+    public function removeAllergene(Allergene $allergene): self
+    {
+        $this->allergenes->removeElement($allergene);
+
+        return $this;
+    }
+
 }

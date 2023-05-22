@@ -91,6 +91,10 @@ a{
   text-decoration: none;
 }
 
+a:hover{
+  color: $jet;
+}
+
 #quaiAntiqueCaroussel{
   width: 50%;
   margin: auto;

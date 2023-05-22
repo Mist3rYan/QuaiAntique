@@ -35,11 +35,11 @@ class Produit
     #[Vich\UploadableField(mapping: 'produit_images', fileNameProperty: 'file_image')]
     private ?File $imageFile = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(min: 3, max: 250)]
     private ?string $file_image = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(min: 3, max: 250)]
     private ?string $title_image = null;
 

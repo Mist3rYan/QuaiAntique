@@ -39,6 +39,7 @@ class ProduitCrudController extends AbstractCrudController
             TextField::new('title_image', 'Titre de l\'image'),
             AssociationField::new('categorie'),
             BooleanField::new('is_favorite','A l\'affiche'),
+            
         ];
     }
 }

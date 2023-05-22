@@ -3,12 +3,12 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Allergene;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -53,22 +53,18 @@ class UserType extends AbstractType
                     'step' => 1
                 ]
             ])
-            ->add('allergenes', ChoiceType::class, [
-                'label' => 'Nombre de convive',
+            ->add('allergenes', EntityType::class, [
+                'class' => Allergene::class,
+                'choice_label' => 'nom',
+                'choice_value' => 'id',
+                'multiple' => true,
+                'expanded' => true,
+                'label' => 'Allergènes',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
-                'multiple' => true,
-                'expanded' => true,
-                'mapped' => false,
-                'choices' => array(
-                    'Gluten' => 'Gluten', 'Crustacés' => 'Crustacés', 'Oeufs' => 'Oeufs',
-                    'Poissons' => 'Poissons', 'Arachides' => 'Arachides', 'Soja' => 'Soja', 'Lait' => 'Lait', 'Fruits à coque' => 'Fruits à coque',
-                    'Céleri' => 'Céleri', 'Moutarde' => 'Moutarde', 'Graines de sésame' => 'Graines de sésame', 'Sulfites' => 'Sulfites',
-                    'Lupin' => 'Lupin', 'Mollusques' => 'Mollusques'
-                ),
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
+                'attr' => [
+                    'class' => 'form-control',
                 ]
             ])
             ->add('submit', SubmitType::class, [
@@ -76,7 +72,8 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'btn btnNavbar mt-4'
                 ],
-            ]);
+            ])
+            ;
         ;
     }
 

@@ -33,10 +33,13 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $user->setRoles(['ROLE_USER']);
+            foreach ($user->getAllergenes() as $allergene) {
+                $entityManager->persist($allergene);
+            }
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
-
+            $this->addFlash('success', 'Votre compte a bien été créé !');
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
