@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\PlatRepository;
+use App\Repository\ProduitRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
-#[ORM\Entity(repositoryClass: PlatRepository::class)]
+#[ORM\Entity(repositoryClass: ProduitRepository::class)]
+#[Vich\Uploadable]
 #[UniqueEntity('titre')]
-class Plat
+class Produit
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,7 +21,7 @@ class Plat
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min:3, max:250)]
+    #[Assert\Length(min: 3, max: 250)]
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -29,19 +32,30 @@ class Plat
     #[Assert\Positive(message: 'Le prix doit être supérieur à 0.')]
     private ?float $prix = null;
 
+    #[Vich\UploadableField(mapping: 'produit_images', fileNameProperty: 'file_image')]
+    private ?File $imageFile = null;
+
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min:3, max:250)]
+    #[Assert\Length(min: 3, max: 250)]
     private ?string $file_image = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min:3, max:250)]
+    #[Assert\Length(min: 3, max: 250)]
     private ?string $title_image = null;
 
     #[ORM\Column]
     private ?bool $is_favorite = null;
 
-    #[ORM\ManyToOne(inversedBy: 'plats')]
+    #[ORM\ManyToOne(inversedBy: 'Produits')]
     private ?Categorie $categorie = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -96,6 +110,30 @@ class Plat
         return $this;
     }
 
+    /**
+     * Set the value of imageFile
+     *
+     * @return  self
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->createdAt = new \DateTimeImmutable();
+        }
+    }
+
+    /**
+     * Get the value of imageFile
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
     public function getTitleImage(): ?string
     {
         return $this->title_image;
@@ -128,6 +166,18 @@ class Plat
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

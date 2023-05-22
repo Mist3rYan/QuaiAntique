@@ -16,6 +16,27 @@
 					{% if app.user %}
 						{% if app.user.roles[0] == 'ROLE_ADMIN' %}
 							<li class="nav-item">
+								<a class="nav-link" aria-current="page" href="{{path('app_home')}}">Accueil</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_carte')}}">Carte</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#">Réservation</a>
+							</li>
+							<li class="nav-item hiddenLi">
+								<a class="nav-link" href="{{path('app_mentions_legales')}}">Mentions Légales</a>
+							</li>
+							<li class="nav-item hiddenLi">
+								<a class="nav-link" href="{{path('app_politique_de_confidentialite')}}">Politique de confidentialité</a>
+							</li>
+							<li class="nav-item hiddenLi">
+								<a class="nav-link" href="{{path('app_credits')}}">Crédits</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('app_user',{'id': app.user.id})}}">Mon Compte</a>
+							</li>
+							<li class="nav-item">
 								<a class="nav-link" href="{{path('admin')}}">Administration</a>
 							</li>
 							<li class="nav-item">
@@ -42,7 +63,7 @@
 								<a class="nav-link" href="{{path('app_credits')}}">Crédits</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">Mon Compte</a>
+								<a class="nav-link" href="{{path('app_user',{'id': app.user.id})}}">Mon Compte</a>
 							</li>
 							<li class="nav-item">
 								<a class="btn btnNavbar" href="{{path('app_logout')}}">Déconnexion</a>

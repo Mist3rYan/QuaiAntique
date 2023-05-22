@@ -13,7 +13,7 @@ use App\Entity\Categorie;
 use App\Entity\Formule;
 use App\Entity\Menu;
 use App\Entity\Reservation;
-use App\Entity\Plat;
+use App\Entity\Produit;
 use App\Entity\Allergene;
 use App\Entity\User;
 
@@ -29,30 +29,32 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Quai Antique - Administration')
+            ->setTitle('Quai Antique')
             ->renderContentMaximized();
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linktoRoute('Retourner sur le site', 'fas fa-arrow-right-from-bracket', 'app_home');
 
         yield MenuItem::section('Planning');
-        yield MenuItem::linkToCrud('Réservations', 'fas fork',  Reservation::class);
+        yield MenuItem::linkToCrud('Réservations', 'fas fa-list',  Reservation::class);
 
         yield MenuItem::section('Parametres');
-        yield MenuItem::linkToCrud('Allergenes', 'fas fork',  Allergene::class);
-        yield MenuItem::linkToCrud('Nombre de couvert', 'fas fork',  Couvert::class);
-        yield MenuItem::linkToCrud('Horaires', 'fas fork',  Calendrier::class);
+        yield MenuItem::linkToCrud('Allergenes', 'fas fa-viruses',  Allergene::class);
+        yield MenuItem::linkToCrud('Nombre de couvert', 'fas fa-utensils',  Couvert::class);
+        yield MenuItem::linkToCrud('Horaires', 'fas fa-clock',  Calendrier::class);
 
         yield MenuItem::section('Carte');
-        yield MenuItem::linkToCrud('Menus', 'fas fork',  Menu::class);
-        yield MenuItem::linkToCrud('Formules', 'fas fork',  Formule::class);
-        yield MenuItem::linkToCrud('Catégories', 'fas fork',  Categorie::class);
-        yield MenuItem::linkToCrud('Produits', 'fas fork',  Plat::class);
+        yield MenuItem::linkToCrud('Menus', 'fas fa-book',  Menu::class);
+        yield MenuItem::linkToCrud('Formules', 'fas fa-bowl-food',  Formule::class);
+        yield MenuItem::linkToCrud('Catégories', 'fas fa-layer-group',  Categorie::class);
+        yield MenuItem::linkToCrud('Produits', 'fas fa-cheese',  Produit::class);
 
         yield MenuItem::section('Utilisateurs');
-        yield MenuItem::linkToCrud('Clients', 'fas fork',  User::class);
+        yield MenuItem::linkToCrud('Clients', 'fas fa-user',  User::class);
 
     }
+    
 }

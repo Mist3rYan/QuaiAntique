@@ -2,21 +2,21 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Plat;
+use App\Entity\Produit;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use Symfony\Component\Validator\Constraints\Choice;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class PlatCrudController extends AbstractCrudController
+class ProduitCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Plat::class;
+        return Produit::class;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -32,8 +32,12 @@ class PlatCrudController extends AbstractCrudController
             TextField::new('titre'),
             TextField::new('description'),
             MoneyField::new('prix')->setCurrency('EUR')->setStoredAsCents(false),
-            TextField::new('file_image', 'Lien de l\'image'),
+            TextField::new('imageFile')->setFormType(VichImageType::class)->onlyWhenCreating(),
+            ImageField::new('file_image', 'Lien de l\'image')
+            ->setBasePath('/uploads/produits')
+            ->setUploadDir('public/uploads/produits'),
             TextField::new('title_image', 'Titre de l\'image'),
+            AssociationField::new('categorie'),
             BooleanField::new('is_favorite','A l\'affiche'),
         ];
     }

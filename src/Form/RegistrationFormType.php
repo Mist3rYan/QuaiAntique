@@ -3,28 +3,27 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Allergene;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $allergenes = [
-            'Gluten', 'Crustacés', 'Oeufs', 'Poissons','Arachides','Soja','Lait','Fruits à coque',
-            'Céleri','Moutarde','Graines de sésame','Sulfites','Lupin','Mollusques'];
-
         $builder
             ->add(
                 'nom',
@@ -35,6 +34,7 @@ class RegistrationFormType extends AbstractType
                         'minlength' => 5,
                         'maxlength' => 180,
                     ],
+                    'invalid_message' => 'Le nom n\a pas la bonne longueur',
                     'label' => 'Nom',
                     'label_attr' => [
                         'class' => 'form-label mt-4'
@@ -58,6 +58,20 @@ class RegistrationFormType extends AbstractType
                     'min' => 1,
                     'max' => 10,
                     'step' => 1
+                ]
+            ])
+            ->add('allergenes', EntityType::class, [
+                'class' => Allergene::class,
+                'choice_label' => 'nom',
+                'choice_value' => 'id',
+                'multiple' => true,
+                'expanded' => true,
+                'label' => 'Allergènes',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+                'attr' => [
+                    'class' => 'form-control',
                 ]
             ])
             ->add(
@@ -105,18 +119,6 @@ class RegistrationFormType extends AbstractType
                 ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas',
             ])
-            ->add('allergenes', ChoiceType::class,array(
-                'multiple' => true,
-                'expanded' => true,
-                'mapped' => false,
-                'choices' => array('Gluten'=>'Gluten', 'Crustacés'=>'Crustacés', 'Oeufs'=>'Oeufs',
-                'Poissons'=>'Poissons','Arachides'=>'Arachides','Soja'=>'Soja','Lait'=>'Lait','Fruits à coque'=>'Fruits à coque',
-                'Céleri' =>'Céleri','Moutarde' =>'Moutarde','Graines de sésame' =>'Graines de sésame','Sulfites' =>'Sulfites',
-                'Lupin' =>'Lupin' ,'Mollusques' =>'Mollusques'),
-                'label_attr' => [
-                    'class' => 'form-label'
-                ]
-            ))
             ->add('agreeTerms', CheckboxType::class, [
                 'attr' => [
                     'class' => 'form-check-input',
@@ -137,13 +139,14 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'btn btnNavbar mt-4'
                 ],
-            ]);;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'allergenes' => [],
         ]);
     }
 }

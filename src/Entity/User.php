@@ -188,7 +188,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAllergenes(?array $allergenes): self
     {
         $this->allergenes = $allergenes;
-
+        
         return $this;
     }
 }

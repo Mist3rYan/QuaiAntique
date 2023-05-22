@@ -4,8 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Reservation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\Time;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
@@ -34,19 +32,20 @@ class ReservationCrudController extends AbstractCrudController
         ->setEntityLabelInplural('Réservations')
         ->setEntityLabelInSingular('Réservation')
         ->setTimeFormat('HH:mm')
-        ->setTimezone('Europe/Paris');;
+        ->setTimezone('Europe/Paris')
+        ->setDefaultSort(['date' => 'ASC']);
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('visiteur_email','Email'),
-            TextField::new('visiteur_name','Nom'),
-            IntegerField::new('visiteur_nb_convive','Nombre de convives'),
             DateField::new('date','Date de réservation')->setFormat('dd-MM-yyyy'),
             TimeField::new('heure','Heure de réservation'),
-            DateField::new('created_at','Date de création')->setFormat('dd-MM-yyyy'),
+            TextField::new('visiteur_name','Nom'),
+            TextField::new('visiteur_email','Email'),
+            IntegerField::new('visiteur_nb_convive','Nombre de convives'),
             ArrayField::new('visiteur_allergene','Allergie'),
+            DateField::new('created_at','Date de création')->setFormat('dd-MM-yyyy'),
         ];
     }
 }

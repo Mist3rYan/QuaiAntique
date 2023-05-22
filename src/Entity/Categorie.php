@@ -22,12 +22,17 @@ class Categorie
     #[Assert\Length(min:3, max:250)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Plat::class)]
-    private Collection $plats;
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
+    private Collection $produits;
 
     public function __construct()
     {
-        $this->plats = new ArrayCollection();
+        $this->produits = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
     }
 
     public function getId(): ?int
@@ -48,29 +53,29 @@ class Categorie
     }
 
     /**
-     * @return Collection<int, Plat>
+     * @return Collection<int, Produit>
      */
-    public function getPlats(): Collection
+    public function getProduits(): Collection
     {
-        return $this->plats;
+        return $this->produits;
     }
 
-    public function addPlat(Plat $plat): self
+    public function addProduit(Produit $produit): self
     {
-        if (!$this->plats->contains($plat)) {
-            $this->plats->add($plat);
-            $plat->setCategorie($this);
+        if (!$this->produits->contains($produit)) {
+            $this->produits->add($produit);
+            $produit->setCategorie($this);
         }
 
         return $this;
     }
 
-    public function removePlat(Plat $plat): self
+    public function removeProduit(Produit $produit): self
     {
-        if ($this->plats->removeElement($plat)) {
+        if ($this->produits->removeElement($produit)) {
             // set the owning side to null (unless already changed)
-            if ($plat->getCategorie() === $this) {
-                $plat->setCategorie(null);
+            if ($produit->getCategorie() === $this) {
+                $produit->setCategorie(null);
             }
         }
 

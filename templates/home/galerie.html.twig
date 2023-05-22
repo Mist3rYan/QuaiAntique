@@ -1,0 +1,23 @@
+<div id="quaiAntiqueCaroussel" class="carousel slide carousel-dark" data-bs-ride="carousel">
+	<div class="carousel-inner">
+		{% if produits|length != 0 %}
+			{% for produit in produits %}
+				{% if produit == produits[0] %}
+					<div class="carousel-item active " data-bs-interval="2000">
+						<img src="{{ asset('uploads/produits/'~produit.getFileImage) }}" title="{{ produit.getTitleImage }}" class="d-block w-100" alt="{{ produit.getTitleImage }}">
+						<div class="carousel-caption">
+							<h5>{{ produit.getTitleImage }}</h5>
+						</div>
+					</div>
+				{% else %}
+					<div class="carousel-item " data-bs-interval="2000">
+						<img src="{{ asset('uploads/produits/'~produit.getFileImage) }}" title="{{ produit.getTitleImage }}" class="d-block w-100" alt="{{ produit.getTitleImage }}">
+						<div class="carousel-caption">
+							<h5>{{ produit.getTitleImage }}</h5>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>

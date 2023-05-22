@@ -60,9 +60,16 @@ div#offcanvasNavbar {
 h1,
 h2,
 h3,
-h4 {
+h4{
   font-family: "Abril Fatface", serif;
 }
+
+h5{
+  font-family: "Lato", sans-serif;
+  font-size: 1.5rem;
+  color: $safron;
+}
+
 
 label {
   margin: 0 15px 0 5px;
@@ -84,7 +91,37 @@ a{
   text-decoration: none;
 }
 
+#quaiAntiqueCaroussel{
+  width: 50%;
+  margin: auto;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;
+}
+
+.carousel-caption{
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  display: block;
+}
+
 @media (min-width: 992px) {
+  .carousel-item img {
+    width: auto;
+    height: 500px;
+  }
+
+  .carousel-caption {
+    display:none;
+  }
+
+  .carousel-item:hover .carousel-caption {
+    display: block;
+  }
+  
+
   li.nav-item.hiddenLi {
     display: none;
   }

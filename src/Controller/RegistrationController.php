@@ -16,15 +16,18 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class RegistrationController extends AbstractController
 {
+    
     #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserAuthenticatorInterface $userAuthenticator, 
     UsersAuthenticator $authenticator, EntityManagerInterface $entityManager,
-    CalendrierRepository $repositery, AllergeneRepository $repositeryAller): Response
+    CalendrierRepository $repositery,AllergeneRepository $repositeryAll): Response
     {
         $calendriers = $repositery->findAll();
-        $allergenes = $repositeryAller->findAll();
+        $allergenes = $repositeryAll->findAll();
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegistrationFormType::class, $user,
+        ['allergenes' => $allergenes]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -44,7 +47,6 @@ class RegistrationController extends AbstractController
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
             'calendriers' => $calendriers,
-            'allergenes' => $allergenes,
         ]);
     }
 }
