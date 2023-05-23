@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Reservation;
 use App\Form\ReservationType;
-use App\Repository\AllergeneRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\CalendrierRepository;
 use App\Repository\CouvertRepository;
+use App\Repository\AllergeneRepository;
+use App\Repository\CalendrierRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReservationController extends AbstractController
 {
@@ -24,7 +25,9 @@ class ReservationController extends AbstractController
         $couverts = $repositeryCouvert->findOneBy(['id' => '1']);
         $nbCouvert = $couverts->getNbCouvert();
         $reservation = new Reservation();
-        $form = $this->createForm(ReservationType::class, $reservation,['allergenes' => $allergenes]);
+        $form = $this->createForm(ReservationType::class, $reservation,[
+            'allergenes' => $allergenes,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
