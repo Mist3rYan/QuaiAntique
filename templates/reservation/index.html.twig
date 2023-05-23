@@ -13,37 +13,43 @@
 			{{ form_row(reservationForm.visiteur_nb_convive,{'attr':{'value': user.getNombreConvive()}}) }}
 			{{ form_row(reservationForm.allergenes) }}
 			{{ form_row(reservationForm.date,{'attr': {'id': 'reservation-date'}}) }}
-			<p class="mt-4">Nombre de place restante {{ nbCouvert }}</p>
+
 			{{ form_row(reservationForm.heure) }}
 			{{ form_row(reservationForm.submit) }}
 			{{ form_end(reservationForm) }}
 			{% for allergene in user.getAllergenes %}
-				<span id ="allergenes" class=" d-none">{{ allergene }}</span>
+				<span id="allergenes" class=" d-none">{{ allergene }}</span>
 			{% endfor %}
 		{% else %}
 			{{ form (reservationForm) }}
 		{% endif %}
-		{% for reservation in reservations %}
-		<span>{{ reservation.getDate|date('d-m-Y')  }}</span>
-		<span>{{ reservation.getHeure|date('H:i') }}</span>
-		<span>{{ reservation.getVisiteurNbConvive() }}</span>
-		{% endfor %}
-		</div>
+			<div class="row">
+				<p class="mt-4 text-center">Nombre de place restante
+					{{ nbCouvert }}</p>
+			</div>
+			{% for reservation in reservations %}
+				<div class="text-center">
+					<span>Date:
+					{{ reservation.getDate|date('d-m-Y')  }}</span>
+					<span>Heure:
+					{{ reservation.getHeure|date('H:i') }}</span>
+					<span>Nombre de convive: 
+					{{ reservation.getVisiteurNbConvive() }}</span>
+				</div>
+			{% endfor %}
+	</div>
 		<script>
-			console.log(calendriers);
-
-			let allergenesList = document.querySelectorAll('#allergenes');
-			for(let i = 0; i < allergenesList.length; i++){
-				let allergene = allergenesList[i].innerHTML;
-				let allergeneInputs = document.querySelectorAll('label');
-				for(let j = 0; j < allergeneInputs.length; j++){
-					let allergeneInput = allergeneInputs[j];
-					if(allergeneInput.innerHTML === allergene){
-						let input = allergeneInput.htmlFor;
-						document.getElementById(input).checked = true;
-					}
+		let allergenesList = document.querySelectorAll('#allergenes');
+		for (let i = 0; i < allergenesList.length; i++) {
+			let allergene = allergenesList[i].innerHTML;
+			let allergeneInputs = document.querySelectorAll('label');
+			for (let j = 0; j < allergeneInputs.length; j++) {
+				let allergeneInput = allergeneInputs[j];
+				if (allergeneInput.innerHTML === allergene) {
+					let input = allergeneInput.htmlFor;
+					document.getElementById(input).checked = true;
 				}
 			}
-
+		}
 		</script>
-	{% endblock %}
+{% endblock %}
