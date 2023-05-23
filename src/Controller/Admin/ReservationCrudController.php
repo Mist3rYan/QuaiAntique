@@ -44,7 +44,7 @@ class ReservationCrudController extends AbstractCrudController
             TextField::new('visiteur_name','Nom'),
             TextField::new('visiteur_email','Email'),
             IntegerField::new('visiteur_nb_convive','Nombre de convives'),
-            ArrayField::new('visiteur_allergene','Allergie'),
+            ArrayField::new('allergenes','Allergie'),
             DateField::new('created_at','Date de création')->setFormat('dd-MM-yyyy'),
         ];
     }

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation
+{% endblock %}
+{% block javascripts %}
+
+			<script>
+		// Récupérer l'élément input du champ 'reservationForm.date'
+		let reservationDateInput = document.getElementById('reservation-date');
+		console.log(reservationDateInput);
+		// Écouter l'événement 'change' pour détecter les changements de valeur
+		reservationDateInput.addEventListener('change', function() {
+			let reservationDate = reservationDateInput.value;
+
+			let currentReservationDate = '17/02/2024';
+
+			if (reservationDate === currentReservationDate) {
+				console.log("Les dates de réservation correspondent.");
+				// Faites ce que vous voulez si les dates correspondent
+			} else {
+				console.log("Les dates de réservation ne correspondent pas.");
+				// Faites ce que vous voulez si les dates ne correspondent pas
+			}
+		});
+	</script>
+
+{% endblock %}
+{% block body %}
+	<div class="container">
+		<h1 class="text-center">Réservation</h1>
+		{{ form_start(reservationForm) }}
+		{% if user %}
+			{{ form_row(reservationForm.visiteur_name,{'attr':{'value': user.getNom()}}) }}
+			{{ form_row(reservationForm.visiteur_email,{'attr':{'value': user.getEmail()}}) }}
+			{{ form_row(reservationForm.visiteur_nb_convive,{'attr':{'value': user.getNombreConvive()}}) }}
+			{{ form_row(reservationForm.allergenes) }}
+			{{ form_row(reservationForm.date,{'attr': {'id': 'reservation-date'}}) }}
+			<p class="mt-4">Nombre de place restante {{ nbCouvert }}</p>
+			{{ form_row(reservationForm.heure) }}
+			{{ form_row(reservationForm.submit) }}
+			{{ form_end(reservationForm) }}
+		{% else %}
+			{{ form (reservationForm) }}
+		{% endif %}
+		{% for reservation in reservations %}
+		<span>{{ reservation.getDate|date('d-m-Y')  }}</span>
+		<span>{{ reservation.getHeure|date('H:i') }}</span>
+		<span>{{ reservation.getVisiteurNbConvive() }}</span>
+		{% endfor %}
+		</div>
+	{% endblock %}

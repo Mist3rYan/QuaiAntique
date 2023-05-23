@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -28,22 +30,24 @@ class Reservation
     #[Assert\Positive(message: 'Le nombre de convive doit être supérieur à 0.')]
     private ?int $visiteur_nb_convive = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column]
     #[Assert\NotNull(message: 'La date ne peut pas être vide.')]
-    private ?\DateTimeImmutable $date = null;
+    private ?\DateTime $date = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $heure = null;
+    #[Assert\NotNull(message: 'L\'heure ne peut pas être vide.')]
+    private ?\DateTime $heure = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(nullable: true)]
-    private array $visiteur_allergene = [];
+    #[ORM\ManyToMany(targetEntity: Allergene::class, inversedBy: 'reservations')]
+    private Collection $allergenes;
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->allergenes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,24 +91,24 @@ class Reservation
         return $this;
     }
 
-    public function getDate(): ?\DateTimeImmutable
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeImmutable $date): self
+    public function setDate(\DateTime $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getHeure(): ?\DateTimeImmutable
+    public function getHeure(): ?\DateTime
     {
         return $this->heure;
     }
 
-    public function setHeure(\DateTimeImmutable $heure): self
+    public function setHeure(\DateTime $heure): self
     {
         $this->heure = $heure;
 
@@ -123,14 +127,26 @@ class Reservation
         return $this;
     }
 
-    public function getVisiteurAllergene(): array
+    /**
+     * @return Collection<int, Allergene>
+     */
+    public function getAllergenes(): Collection
     {
-        return $this->visiteur_allergene;
+        return $this->allergenes;
     }
 
-    public function setVisiteurAllergene(?array $visiteur_allergene): self
+    public function addAllergene(Allergene $allergene): self
     {
-        $this->visiteur_allergene = $visiteur_allergene;
+        if (!$this->allergenes->contains($allergene)) {
+            $this->allergenes->add($allergene);
+        }
+
+        return $this;
+    }
+
+    public function removeAllergene(Allergene $allergene): self
+    {
+        $this->allergenes->removeElement($allergene);
 
         return $this;
     }

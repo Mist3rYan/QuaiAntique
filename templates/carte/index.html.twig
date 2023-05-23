@@ -9,7 +9,7 @@
 		{% for menu in menus %}
 			<div class="conteneurTransparent mb-2">
 				<h3 class="text-center">{{ menu.getNom }}</h3>
-				<div class="conteneurTransparent">
+				<div class="conteneurTransparent2">
 					{% for formule in formules %}
 						{% if formule.getMenu == menu %}
 							<strong>{{ formule.getTitre }}
@@ -25,7 +25,7 @@
 		{% for categorie in categories %}
 			<div class="conteneurTransparent mb-2">
 				<h3 class="text-center">{{ categorie.getNom }}</h3>
-				<div class="conteneurTransparent">
+				<div class="conteneurTransparent2">
 					{% for plat in plats %}
 						{% if plat.getCategorie == categorie %}
 							{{ plat.getTitre }} -

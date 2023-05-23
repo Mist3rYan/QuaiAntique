@@ -16,6 +16,7 @@ use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
+
 class AppFixtures extends Fixture
 {
     private Generator $faker;
@@ -303,16 +304,13 @@ class AppFixtures extends Fixture
         $produit->setIsFavorite(false);
         $manager->persist($produit);
 
-        $tableau = array();
         for($i=0; $i<5; $i++){
             $reservation = new Reservation();
             $reservation->setVisiteurName($this->faker->name());
             $reservation->setVisiteurEmail($this->faker->email());
             $reservation->setVisiteurNbConvive($this->faker->numberBetween(1, 10));
-            $reservation->setDate(new \DateTimeImmutable('2023-07-01'));
-            $reservation->setHeure(new \DateTimeImmutable('2023-07-01 12:15'));
-            array_push($tableau, $allergie[$i]);
-            $reservation->setVisiteurAllergene($tableau);
+            $reservation->setDate(new \DateTime());
+            $reservation->setHeure(new \DateTime('2023-07-01 12:15')); 
             $manager->persist($reservation);
         }
 
@@ -322,7 +320,6 @@ class AppFixtures extends Fixture
             $user->setEmail($this->faker->email());
             $user->setRoles(['ROLE_USER']);
             $user->setPlainPassword('password'); // 'password
-            $user->setAllergenes($tableau);
             $manager->persist($user);
         }
         $user = new User();
