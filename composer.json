@@ -46,7 +46,8 @@
     "twig/twig": "^2.12|^3.0",
     "vich/uploader-bundle": "^2.1",
     "doctrine/doctrine-fixtures-bundle": "^3.4",
-    "fakerphp/faker": "^1.21"
+    "fakerphp/faker": "^1.21",
+    "symfony/debug-bundle": "6.2.*"
   },
   "config": {
     "allow-plugins": {
