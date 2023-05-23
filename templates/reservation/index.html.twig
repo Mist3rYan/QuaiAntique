@@ -2,29 +2,7 @@
 
 {% block title %}Reservation
 {% endblock %}
-{% block javascripts %}
 
-			<script>
-		// Récupérer l'élément input du champ 'reservationForm.date'
-		let reservationDateInput = document.getElementById('reservation-date');
-		console.log(reservationDateInput);
-		// Écouter l'événement 'change' pour détecter les changements de valeur
-		reservationDateInput.addEventListener('change', function() {
-			let reservationDate = reservationDateInput.value;
-
-			let currentReservationDate = '17/02/2024';
-
-			if (reservationDate === currentReservationDate) {
-				console.log("Les dates de réservation correspondent.");
-				// Faites ce que vous voulez si les dates correspondent
-			} else {
-				console.log("Les dates de réservation ne correspondent pas.");
-				// Faites ce que vous voulez si les dates ne correspondent pas
-			}
-		});
-	</script>
-
-{% endblock %}
 {% block body %}
 	<div class="container">
 		<h1 class="text-center">Réservation</h1>
@@ -39,6 +17,9 @@
 			{{ form_row(reservationForm.heure) }}
 			{{ form_row(reservationForm.submit) }}
 			{{ form_end(reservationForm) }}
+			{% for allergene in user.getAllergenes %}
+				<span id ="allergenes" class=" d-none">{{ allergene }}</span>
+			{% endfor %}
 		{% else %}
 			{{ form (reservationForm) }}
 		{% endif %}
@@ -48,4 +29,21 @@
 		<span>{{ reservation.getVisiteurNbConvive() }}</span>
 		{% endfor %}
 		</div>
+		<script>
+			console.log(calendriers);
+
+			let allergenesList = document.querySelectorAll('#allergenes');
+			for(let i = 0; i < allergenesList.length; i++){
+				let allergene = allergenesList[i].innerHTML;
+				let allergeneInputs = document.querySelectorAll('label');
+				for(let j = 0; j < allergeneInputs.length; j++){
+					let allergeneInput = allergeneInputs[j];
+					if(allergeneInput.innerHTML === allergene){
+						let input = allergeneInput.htmlFor;
+						document.getElementById(input).checked = true;
+					}
+				}
+			}
+
+		</script>
 	{% endblock %}

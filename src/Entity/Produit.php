@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ProduitRepository;
+use App\Entity\Categorie;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProduitRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 #[Vich\Uploadable]
@@ -46,7 +47,7 @@ class Produit
     #[ORM\Column]
     private ?bool $is_favorite = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Produits')]
+    #[ORM\ManyToOne(inversedBy: 'Produits', targetEntity: Categorie::class)]
     private ?Categorie $categorie = null;
 
     #[ORM\Column]

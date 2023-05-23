@@ -42,6 +42,38 @@
 							<li class="nav-item">
 								<a class="btn btnNavbar" href="{{path('app_logout')}}">Déconnexion</a>
 							</li>
+							<li class="nav-item hiddenLi">
+								<table>
+									<tr>
+										<th class="text-center" colspan="3">
+											<h4 class='mt-4'>Horaires</h4>
+										</th>
+									</tr>
+									{% for calendrier in calendriers %}
+										<tr>
+											<th>{{ calendrier.jour }}</th>
+											{% if calendrier.isIsOpen %}
+												{% if calendrier.getOMidi != null %}
+													{% if calendrier.getFMidi != null %}
+														<td style="padding:0 15px 0 0;">{{ calendrier.getOMidi|date('H:i') }}
+															-
+															{{ calendrier.getFMidi|date('H:i') }}</td>
+													{% endif %}
+												{% endif %}
+												{% if calendrier.getOSoir != null %}
+													{% if calendrier.getFSoir != null %}
+														<td>{{ calendrier.getOSoir|date('H:i') }}
+															-
+															{{ calendrier.getFSoir|date('H:i') }}</td>
+													{% endif %}
+												{% endif %}
+											{% else %}
+												<td class="text-center" colspan="2">Fermé</td>
+											{% endif %}
+										</tr>
+									{% endfor %}
+								</table>
+							</li>
 						{% endif %}
 						{% if app.user.roles[0] == 'ROLE_USER' %}
 							<li class="nav-item">
@@ -72,7 +104,7 @@
 								<table>
 									<tr>
 										<th class="text-center" colspan="3">
-											<h4>Horaires</h4>
+											<h4 class='mt-4'>Horaires</h4>
 										</th>
 									</tr>
 									{% for calendrier in calendriers %}
@@ -130,7 +162,7 @@
 							<table>
 								<tr>
 									<th class="text-center" colspan="3">
-										<h4>Horaires</h4>
+										<h4 class='mt-4'>Horaires</h4>
 									</th>
 								</tr>
 								{% for calendrier in calendriers %}
