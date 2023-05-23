@@ -62,7 +62,7 @@ php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 ```
 
-## Administration gérer apr easyadmin-bundle
+## Administration gérer par easyadmin-bundle
 
 Sources : https://symfony.com/bundles/EasyAdminBundle/current/dashboards.html
 
