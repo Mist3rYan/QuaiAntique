@@ -129,7 +129,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('1.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -139,17 +139,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
-        $produit->setTitleImage('');
-        $produit->setIsFavorite(false);
-        $manager->persist($produit);
-
-        $produit = new Produit();
-        $produit->setTitre('Craquant de Maroilles, salade verte et sa brunoise de pommes');
-        $produit->setDescription('Fait maison.');
-        $produit->setPrix(7.00);
-        $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('17.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -159,7 +149,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('2.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -169,7 +159,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('3.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -179,7 +169,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('4.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -189,7 +179,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('5.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -199,7 +189,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(19.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('6.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -209,7 +199,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(19.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('7.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -219,7 +209,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(19.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('8.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -229,7 +219,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(19.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('9.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -239,17 +229,17 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(19.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('10.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
 
         $produit = new Produit();
-        $produit->setTitre('Cassolette de moulesdécortiquées à la crème et ses frites');
+        $produit->setTitre('Cassolette de moules décortiquées à la crème et ses frites');
         $produit->setDescription('Fait maison.');
         $produit->setPrix(19.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('11.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -259,7 +249,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('12.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -269,7 +259,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('13.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -279,7 +269,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('14.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -289,7 +279,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('15.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);
@@ -299,7 +289,7 @@ class AppFixtures extends Fixture
         $produit->setDescription('Fait maison.');
         $produit->setPrix(7.00);
         $produit->setCategorie($categories);
-        $produit->setFileImage('placeholder.jpg');
+        $produit->setFileImage('16.jpg');
         $produit->setTitleImage('');
         $produit->setIsFavorite(false);
         $manager->persist($produit);

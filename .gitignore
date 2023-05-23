@@ -25,5 +25,4 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-/public/uploads/produits/*
-!/public/uploads/produits/placeholder.jpg
+
