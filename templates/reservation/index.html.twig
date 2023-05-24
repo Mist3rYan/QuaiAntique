@@ -2,21 +2,26 @@
 
 {% block title %}Reservation
 {% endblock %}
-
 {% block body %}
 	<div class="container">
 		<h1 class="text-center">Réservation</h1>
-		{{ form_start(reservationForm) }}
+		<div class ="row">
+			<p class="mt-4 text-center">Nous pouvons accueillir 
+				<span class="js-nombre-total">{{ nbCouvert }}</span> couverts par jour.
+			</p>
+		</div>
+		<div class="row">
+			<h4 class="mt-4 text-center">Nombre de place(s) restante(s) :
+				<span id="reservation_visiteur_nbConvive">{{ nbCouvert }}</span>
+			</h4>
+		</div>
 		{% if user %}
+			{{ form_start(reservationForm) }}
 			{{ form_row(reservationForm.visiteur_name,{'attr':{'value': user.getNom()}}) }}
 			{{ form_row(reservationForm.visiteur_email,{'attr':{'value': user.getEmail()}}) }}
 			{{ form_row(reservationForm.visiteur_nb_convive,{'attr':{'value': user.getNombreConvive()}}) }}
 			{{ form_row(reservationForm.allergenes) }}
 			{{ form_row(reservationForm.date,{'attr': {'id': 'reservation-date'}}) }}
-			<div class="row">
-				<p class="mt-4 text-center">Nombre de place(s) restante(s) : 
-					<span id="reservation_visiteur_nbConvive">{{ nbCouvert }}</span></p>
-			</div>
 			{{ form_row(reservationForm.heure) }}
 			{{ form_row(reservationForm.submit) }}
 			{{ form_end(reservationForm) }}
@@ -28,51 +33,50 @@
 		{% endif %}
 			{% for reservation in reservations %}
 				<div class="text-center">
-					<span class="d-none js-nombre-total">{{ nbCouvert }}</span>
 					<span class="js-date-reservation">
-					{{ reservation.getDate|date('Y-m-d')  }}</span>
+						{{ reservation.getDate|date('Y-m-d')  }}</span>
 					<span class="js-heure-reservation">
-					{{ reservation.getHeure|date('H:i') }}</span>
+						{{ reservation.getHeure|date('H:i') }}</span>
 					<span class="js-nombre-reservation">
-					{{ reservation.getVisiteurNbConvive() }}</span>
+						{{ reservation.getVisiteurNbConvive() }}</span>
 				</div>
 			{% endfor %}
-	</div>
-{% endblock %}
-	{% block javascripts %}
-		<script>
-		function onChangeDate(event) {
-			event.preventDefault();
-			let nombreTotal = document.getElementsByClassName('js-nombre-total')[0].innerHTML;
-			let date = document.getElementsByClassName('js-date')[0].value;
-			let dates = document.querySelectorAll('.js-date-reservation');
-			let nombres = document.querySelectorAll('.js-nombre-reservation');
-			for (let i = 0; i < dates.length; i++) {
-				let dateReservation = dates[i].innerText;
-				if(dateReservation === date) {
-					let nombre = nombres[i].innerText;
-					nombreTotal = nombreTotal - nombre;
-					document.getElementById('reservation_visiteur_nbConvive').innerText = nombreTotal;
-				}
-			}
-		}
-
-		document.querySelectorAll('.js-date').forEach(function(link) {
-			link.addEventListener('change', onChangeDate)
-			});
-
-
-		let allergenesList = document.querySelectorAll('#allergenes');
-		for (let i = 0; i < allergenesList.length; i++) {
-			let allergene = allergenesList[i].innerHTML;
-			let allergeneInputs = document.querySelectorAll('label');
-			for (let j = 0; j < allergeneInputs.length; j++) {
-				let allergeneInput = allergeneInputs[j];
-				if (allergeneInput.innerHTML === allergene) {
-					let input = allergeneInput.htmlFor;
-					document.getElementById(input).checked = true;
-				}
-			}
-		}
-		</script>
+		</div>
 	{% endblock %}
+{% block javascripts %}
+{{ encore_entry_script_tags('app') }}
+<script >
+    function onChangeDate(event) {
+        let nombreTotal = document.getElementsByClassName('js-nombre-total')[0].innerHTML;
+        let date = document.getElementsByClassName('js-date')[0].value;
+        let dates = document.querySelectorAll('.js-date-reservation');
+        let nombres = document.querySelectorAll('.js-nombre-reservation');
+        for (let i = 0; i < dates.length; i++) {
+            let dateReservation = dates[i].innerText;
+            if (dateReservation === date) {
+                let nombre = nombres[i].innerText;
+                nombreTotal = nombreTotal - nombre;
+            }
+        }
+		document.getElementById('reservation_visiteur_nbConvive').innerText = nombreTotal;
+    }
+
+document.querySelectorAll('.js-date').forEach(function(link) {
+    link.addEventListener('change', onChangeDate)
+});
+
+
+let allergenesList = document.querySelectorAll('#allergenes');
+for (let i = 0; i < allergenesList.length; i++) {
+    let allergene = allergenesList[i].innerHTML;
+    let allergeneInputs = document.querySelectorAll('label');
+    for (let j = 0; j < allergeneInputs.length; j++) {
+        let allergeneInput = allergeneInputs[j];
+        if (allergeneInput.innerHTML === allergene) {
+            let input = allergeneInput.htmlFor;
+            document.getElementById(input).checked = true;
+        }
+    }
+} 
+</script>
+{% endblock %}
