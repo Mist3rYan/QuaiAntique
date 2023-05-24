@@ -13,7 +13,10 @@
 			{{ form_row(reservationForm.visiteur_nb_convive,{'attr':{'value': user.getNombreConvive()}}) }}
 			{{ form_row(reservationForm.allergenes) }}
 			{{ form_row(reservationForm.date,{'attr': {'id': 'reservation-date'}}) }}
-
+			<div class="row">
+				<p class="mt-4 text-center">Nombre de place(s) restante(s) : 
+					<span id="reservation_visiteur_nbConvive">{{ nbCouvert }}</span></p>
+			</div>
 			{{ form_row(reservationForm.heure) }}
 			{{ form_row(reservationForm.submit) }}
 			{{ form_end(reservationForm) }}
@@ -23,22 +26,42 @@
 		{% else %}
 			{{ form (reservationForm) }}
 		{% endif %}
-			<div class="row">
-				<p class="mt-4 text-center">Nombre de place restante
-					{{ nbCouvert }}</p>
-			</div>
 			{% for reservation in reservations %}
 				<div class="text-center">
-					<span>Date:
-					{{ reservation.getDate|date('d-m-Y')  }}</span>
-					<span>Heure:
+					<span class="d-none js-nombre-total">{{ nbCouvert }}</span>
+					<span class="js-date-reservation">
+					{{ reservation.getDate|date('Y-m-d')  }}</span>
+					<span class="js-heure-reservation">
 					{{ reservation.getHeure|date('H:i') }}</span>
-					<span>Nombre de convive: 
+					<span class="js-nombre-reservation">
 					{{ reservation.getVisiteurNbConvive() }}</span>
 				</div>
 			{% endfor %}
 	</div>
+{% endblock %}
+	{% block javascripts %}
 		<script>
+		function onChangeDate(event) {
+			event.preventDefault();
+			let nombreTotal = document.getElementsByClassName('js-nombre-total')[0].innerHTML;
+			let date = document.getElementsByClassName('js-date')[0].value;
+			let dates = document.querySelectorAll('.js-date-reservation');
+			let nombres = document.querySelectorAll('.js-nombre-reservation');
+			for (let i = 0; i < dates.length; i++) {
+				let dateReservation = dates[i].innerText;
+				if(dateReservation === date) {
+					let nombre = nombres[i].innerText;
+					nombreTotal = nombreTotal - nombre;
+					document.getElementById('reservation_visiteur_nbConvive').innerText = nombreTotal;
+				}
+			}
+		}
+
+		document.querySelectorAll('.js-date').forEach(function(link) {
+			link.addEventListener('change', onChangeDate)
+			});
+
+
 		let allergenesList = document.querySelectorAll('#allergenes');
 		for (let i = 0; i < allergenesList.length; i++) {
 			let allergene = allergenesList[i].innerHTML;
@@ -52,4 +75,4 @@
 			}
 		}
 		</script>
-{% endblock %}
+	{% endblock %}

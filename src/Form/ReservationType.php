@@ -99,7 +99,7 @@ class ReservationType extends AbstractType
                     'class' => 'form-label mt-4'
                 ],
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control js-date',
                 ],
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd'
