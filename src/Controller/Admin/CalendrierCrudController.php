@@ -30,7 +30,7 @@ class CalendrierCrudController extends AbstractCrudController
         ->setEntityLabelInplural('Horaires')
         ->setEntityLabelInSingular('Horaire')
         ->setTimeFormat('HH:mm')
-        ->setTimezone('Europe/Paris');
+        ->setTimezone('UTC');
     }
     
     public function configureFields(string $pageName): iterable

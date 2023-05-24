@@ -47,7 +47,7 @@ class Produit
     #[ORM\Column]
     private ?bool $is_favorite = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Produits', targetEntity: Categorie::class)]
+    #[ORM\ManyToOne(inversedBy: 'produits', targetEntity: Categorie::class)]
     private ?Categorie $categorie = null;
 
     #[ORM\Column]

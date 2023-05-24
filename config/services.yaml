@@ -21,9 +21,9 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\EntityListener\:
-        resource: "../src/EntityListener/"
-        tags: ['doctrine.orm.entity_listener']
+    App\EventListener\RequestListener:
+        tags:
+            - {name: kernel.event_listener, event: kernel.request}
 
 
 
