@@ -5,14 +5,14 @@
 {% block body %}
 	<div class="container">
 		<h1 class="text-center">Réservation</h1>
-		<div class ="row">
-			<p class="mt-4 text-center">Nous pouvons accueillir 
-				<span class="js-nombre-total">{{ nbCouvert }}</span> couverts par jour.
-			</p>
+		<div class="row">
+			<h4 class="mt-4 text-center">Midi place(s) restante(s) :
+				<span id="reservation_visiteur_nbConviveM">{{ nbCouvert }}</span>
+			</h4>
 		</div>
 		<div class="row">
-			<h4 class="mt-4 text-center">Nombre de place(s) restante(s) :
-				<span id="reservation_visiteur_nbConvive">{{ nbCouvert }}</span>
+			<h4 class="mt-4 text-center">Soir place(s) restante(s) :
+				<span id="reservation_visiteur_nbConviveS">{{ nbCouvert }}</span>
 			</h4>
 		</div>
 		{% if user %}
@@ -31,14 +31,13 @@
 		{% else %}
 			{{ form (reservationForm) }}
 		{% endif %}
+		<span hidden class="js-nombre-total">{{ nbCouvert }}</span>
+		</div>
 			{% for reservation in reservations %}
-				<div class="text-center">
-					<span class="js-date-reservation">
-						{{ reservation.getDate|date('Y-m-d')  }}</span>
-					<span class="js-heure-reservation">
-						{{ reservation.getHeure|date('H:i') }}</span>
-					<span class="js-nombre-reservation">
-						{{ reservation.getVisiteurNbConvive() }}</span>
+				<div hidden class="text-center">
+					<span class="js-date-reservation">{{ reservation.getDate|date('Y-m-d')}}</span>
+					<span class="js-heure-reservation">{{ reservation.getHeure|date('H:i')}}</span>
+					<span class="js-nombre-reservation">{{ reservation.getVisiteurNbConvive()}}</span>
 				</div>
 			{% endfor %}
 		</div>
@@ -47,18 +46,70 @@
 {{ encore_entry_script_tags('app') }}
 <script >
     function onChangeDate(event) {
-        let nombreTotal = document.getElementsByClassName('js-nombre-total')[0].innerHTML;
+		let table  = document.getElementById("maTable");
+		let tdArray  = [];
+		for (var i = 1; i < table.rows.length; i++) {
+			var row = table.rows[i];
+			var rowArray = [];
+			// Parcourez toutes les cellules de chaque ligne
+			for (var j = 0; j < row.cells.length; j++) {
+				var cell = row.cells[j];
+				if(cell.innerHTML != "&nbsp;&nbsp;"){
+					// Ajoutez la valeur de la cellule au tableau
+					let buffer = cell.innerHTML;
+					buffer = buffer.replace(/[\s-]/g, "");
+					rowArray.push(buffer);
+				}
+			}
+			tdArray.push(rowArray);
+		}
+		
         let date = document.getElementsByClassName('js-date')[0].value;
+		let jourSemaine = new Date(date).getDay();
+		jourSemaine = jourSemaine - 1;
+
+        let nombreTotalMidi = document.getElementsByClassName('js-nombre-total')[0].innerHTML;
+        let nombreTotalSoir = document.getElementsByClassName('js-nombre-total')[0].innerHTML;
         let dates = document.querySelectorAll('.js-date-reservation');
         let nombres = document.querySelectorAll('.js-nombre-reservation');
+		let heures = document.querySelectorAll('.js-heure-reservation');
+
+		//Place restante midi et soir
         for (let i = 0; i < dates.length; i++) {
             let dateReservation = dates[i].innerText;
             if (dateReservation === date) {
                 let nombre = nombres[i].innerText;
-                nombreTotal = nombreTotal - nombre;
+				let heure = heures[i].innerText;
+				let openMidi = tdArray[jourSemaine][1];
+				console.log(openMidi);
+				let closeMidi = tdArray[jourSemaine][2];
+				console.log(closeMidi);
+				let openSoir = tdArray[jourSemaine][3];
+				console.log(openSoir);
+				let closeSoir = tdArray[jourSemaine][4];
+				console.log(closeSoir);
+
+				if( closeMidi != "Fermé"){
+					if(heure >= openMidi && heure <= closeMidi){
+						nombreTotalMidi = nombreTotalMidi - nombre;
+					}
+				}
+				if( closeMidi === "Fermé"){
+					nombreTotalMidi = 0;
+				}
+				if( closeSoir != "Fermé"){
+					if(heure >= openSoir && heure <= closeSoir){
+						nombreTotalSoir = nombreTotalSoir - nombre;
+					}
+				}
+				if( closeSoir === "Fermé"){
+					nombreTotalSoir = 0;
+				}
+				console.log(heure);
             }
         }
-		document.getElementById('reservation_visiteur_nbConvive').innerText = nombreTotal;
+		document.getElementById('reservation_visiteur_nbConviveM').innerText = nombreTotalMidi;
+		document.getElementById('reservation_visiteur_nbConviveS').innerText = nombreTotalSoir;
     }
 
 document.querySelectorAll('.js-date').forEach(function(link) {

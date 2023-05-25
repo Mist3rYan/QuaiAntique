@@ -32,7 +32,7 @@ class ReservationCrudController extends AbstractCrudController
         ->setEntityLabelInplural('Réservations')
         ->setEntityLabelInSingular('Réservation')
         ->setTimeFormat('HH:mm')
-        ->setTimezone('Europe/Paris')
+        ->setTimezone('UTC')
         ->setDefaultSort(['date' => 'ASC']);
     }
 

@@ -4,51 +4,70 @@
 	<!-- Copyright -->
 	<div class="row footer mt-4">
 		<div class="col-5 d-flex  align-items-center justify-content-center">
-			<table>
-			<tr><th class= "text-center" colspan="3" ><h4 >Horaires</h4></th></tr>
+			<table id="maTable">
+				<tr>
+					<th class="text-center" colspan="3">
+						<h4>Horaires</h4>
+					</th>
+				</tr>
 				{% for calendrier in calendriers %}
 					<tr>
 						<th>{{ calendrier.jour }}</th>
 						{% if calendrier.isIsOpen %}
 							{% if calendrier.getOMidi != null %}
 								{% if calendrier.getFMidi != null %}
-									<td  >{{ calendrier.getOMidi|date('H:i') }}
-										-
-										{{ calendrier.getFMidi|date('H:i') }}</td>
+									<td>{{ calendrier.getOMidi|date('H:i') }} -</td>
+									<td>{{ calendrier.getFMidi|date('H:i') }} </td>
+									<td>&nbsp;&nbsp;</td>
+								{% else %}
+									<td></td>
+									<td>Fermé</td>
+									<td>&nbsp;&nbsp;</td>
 								{% endif %}
+							{% else %}
+								<td></td>
+								<td>Fermé</td>
+								<td>&nbsp;&nbsp;</td>
 							{% endif %}
 							{% if calendrier.getOSoir != null %}
 								{% if calendrier.getFSoir != null %}
-									<td>{{ calendrier.getOSoir|date('H:i') }}
-										-
-										{{ calendrier.getFSoir|date('H:i') }}</td>
+									<td> {{ calendrier.getOSoir|date('H:i') }} -</td>
+									<td>{{ calendrier.getFSoir|date('H:i') }}</td>
+								{% else %}
+									<td></td>
+									<td>Fermé</td>
 								{% endif %}
+							{% else %}
+								<td></td>
+								<td>Fermé</td>
 							{% endif %}
-						{% else %}
-							<td class= "text-center" colspan="2" >Fermé</td>
-						{% endif %}
-						</tr>
-					{% endfor %}
-				</table>
-
-			</div>
-			<div class="col-2 d-flex flex-column align-items-center justify-content-center">
-				<div class="row"><img src="{{ asset('images/cheflogo.png') }}" height="70" alt="Quai antique">
-				</div>
-				<div class="row">
-				&copy; 2023
-				</div>	
-			</div>
-			<div class="col-5 d-flex flex-column align-items-center justify-content-center">
-				<div class="row">
-					<a class="link-footer" href="{{path('app_mentions_legales')}}">Mentions légales</a>
-				</div>
-				<div class="row">
-					<a class="link-footer" href="{{path('app_politique_de_confidentialite')}}">Politique de Confidentialité</a>
-				</div>
-				<div class="row">
-					<a class="link-footer" href="{{path('app_credits')}}">Crédits</a>
-				</div>
-			</div>
-		</div><!-- Copyright --></footer>
-	<!-- Footer -->
+					{% else %}
+						<td></td>
+						<td>Fermé</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div class="col-2 d-flex flex-column align-items-center justify-content-center">
+		<div class="row"><img src="{{ asset('images/cheflogo.png') }}" height="70" alt="Quai antique">
+		</div>
+		<div class="row">
+			&copy; 2023
+		</div>
+	</div>
+	<div class="col-5 d-flex flex-column align-items-center justify-content-center">
+		<div class="row">
+			<a class="link-footer" href="{{path('app_mentions_legales')}}">Mentions légales</a>
+		</div>
+		<div class="row">
+			<a class="link-footer" href="{{path('app_politique_de_confidentialite')}}">Politique de Confidentialité</a>
+		</div>
+		<div class="row">
+			<a class="link-footer" href="{{path('app_credits')}}">Crédits</a>
+		</div>
+	</div>
+</div><!-- Copyright --></footer><!-- Footer -->

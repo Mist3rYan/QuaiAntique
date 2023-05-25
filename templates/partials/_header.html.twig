@@ -58,17 +58,25 @@
 														<td style="padding:0 15px 0 0;">{{ calendrier.getOMidi|date('H:i') }}
 															-
 															{{ calendrier.getFMidi|date('H:i') }}</td>
+													{% else %}
+														<td>Fermé</td>
 													{% endif %}
+												{% else %}
+													<td>Fermé</td>
 												{% endif %}
 												{% if calendrier.getOSoir != null %}
 													{% if calendrier.getFSoir != null %}
 														<td>{{ calendrier.getOSoir|date('H:i') }}
 															-
 															{{ calendrier.getFSoir|date('H:i') }}</td>
+													{% else %}
+														<td>Fermé</td>
 													{% endif %}
+												{% else %}
+													<td>Fermé</td>
 												{% endif %}
 											{% else %}
-												<td class="text-center" colspan="2">Fermé</td>
+												<td class="text-center">Fermé</td>
 											{% endif %}
 										</tr>
 									{% endfor %}
@@ -116,17 +124,25 @@
 														<td style="padding:0 15px 0 0;">{{ calendrier.getOMidi|date('H:i') }}
 															-
 															{{ calendrier.getFMidi|date('H:i') }}</td>
+													{% else %}
+														<td>Fermé</td>
 													{% endif %}
+												{% else %}
+													<td>Fermé</td>
 												{% endif %}
 												{% if calendrier.getOSoir != null %}
 													{% if calendrier.getFSoir != null %}
 														<td>{{ calendrier.getOSoir|date('H:i') }}
 															-
 															{{ calendrier.getFSoir|date('H:i') }}</td>
+													{% else %}
+														<td>Fermé</td>
 													{% endif %}
+												{% else %}
+													<td>Fermé</td>
 												{% endif %}
 											{% else %}
-												<td class="text-center" colspan="2">Fermé</td>
+												<td class="text-center">Fermé</td>
 											{% endif %}
 										</tr>
 									{% endfor %}
@@ -174,17 +190,25 @@
 													<td style="padding:0 15px 0 0;">{{ calendrier.getOMidi|date('H:i') }}
 														-
 														{{ calendrier.getFMidi|date('H:i') }}</td>
+												{% else %}
+													<td>Fermé</td>
 												{% endif %}
+											{% else %}
+												<td>Fermé</td>
 											{% endif %}
 											{% if calendrier.getOSoir != null %}
 												{% if calendrier.getFSoir != null %}
 													<td>{{ calendrier.getOSoir|date('H:i') }}
 														-
 														{{ calendrier.getFSoir|date('H:i') }}</td>
+												{% else %}
+													<td>Fermé</td>
 												{% endif %}
+											{% else %}
+												<td>Fermé</td>
 											{% endif %}
 										{% else %}
-											<td class="text-center" colspan="2">Fermé</td>
+											<td class="text-center">Fermé</td>
 										{% endif %}
 									</tr>
 								{% endfor %}
