@@ -175,7 +175,6 @@ function onChangeDate(event) {
 		radioButton.addEventListener("change", function() {
 			if (this.checked) {
 				inputElement.value = this.value;
-				document.getElementById("reservation_heure").disabled = false;
 			}
 		});
 	});
@@ -187,7 +186,7 @@ document.querySelectorAll('.js-date').forEach(function(link) {
 
 document.getElementById('champRadioMidi').style.display = "none";
 document.getElementById('champRadioSoir').style.display = "none";
-document.getElementById("reservation_heure").disabled = true;
+document.getElementById("reservation_heure").readOnly = true;
 let allergenesList = document.querySelectorAll('#allergenes');
 for (let i = 0; i < allergenesList.length; i++) {
     let allergene = allergenesList[i].innerHTML;
