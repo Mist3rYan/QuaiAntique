@@ -52,6 +52,18 @@
 {{ encore_entry_script_tags('app') }}
 <script >
 function onChangeDate(event) {
+// Récupérer la date d'aujourd'hui
+var aujourdHui = new Date();
+var annee = aujourdHui.getFullYear();
+var mois = String(aujourdHui.getMonth() + 1).padStart(2, '0');
+var jour = String(aujourdHui.getDate()).padStart(2, '0');
+var dateFormatee = annee + '-' + mois + '-' + jour;
+// Récupérer la valeur du champ date (supposons qu'il ait l'ID "champDate")
+let date = document.getElementById('reservation_date').value;
+// Comparer les dates
+if (date < dateFormatee) {
+  document.getElementById('reservation_date').value = dateFormatee;
+}
 	document.getElementById('champRadioMidi').style.display = "block";
 	document.getElementById('champRadioSoir').style.display = "block";
 	while (radioContainerMidi.firstChild) {
@@ -78,7 +90,6 @@ function onChangeDate(event) {
 		tdArray.push(rowArray);
 	}
 		
-    let date = document.getElementsByClassName('js-date')[0].value;
 	let jourSemaine = new Date(date).getDay();
 	if(jourSemaine == 0){
 		jourSemaine = 7;
