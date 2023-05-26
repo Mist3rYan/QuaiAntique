@@ -63,6 +63,7 @@ let date = document.getElementById('reservation_date').value;
 // Comparer les dates
 if (date < dateFormatee) {
   document.getElementById('reservation_date').value = dateFormatee;
+  date = dateFormatee;
 }
 	document.getElementById('champRadioMidi').style.display = "block";
 	document.getElementById('champRadioSoir').style.display = "block";
