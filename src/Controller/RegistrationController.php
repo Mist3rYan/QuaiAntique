@@ -17,17 +17,24 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class RegistrationController extends AbstractController
 {
-    
+
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserAuthenticatorInterface $userAuthenticator, 
-    UsersAuthenticator $authenticator, EntityManagerInterface $entityManager,
-    CalendrierRepository $repositery,AllergeneRepository $repositeryAll): Response
-    {
+    public function register(
+        Request $request,
+        UserAuthenticatorInterface $userAuthenticator,
+        UsersAuthenticator $authenticator,
+        EntityManagerInterface $entityManager,
+        CalendrierRepository $repositery,
+        AllergeneRepository $repositeryAll
+    ): Response {
         $calendriers = $repositery->findAll();
         $allergenes = $repositeryAll->findAll();
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user,
-        ['allergenes' => $allergenes]);
+        $form = $this->createForm(
+            RegistrationFormType::class,
+            $user,
+            ['allergenes' => $allergenes]
+        );
 
         $form->handleRequest($request);
 
@@ -37,6 +44,7 @@ class RegistrationController extends AbstractController
             foreach ($user->getAllergenes() as $allergene) {
                 $entityManager->persist($allergene);
             }
+            $user->setPassword($form->get('plainpassword')->getData());
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
