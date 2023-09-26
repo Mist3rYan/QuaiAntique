@@ -13,7 +13,7 @@ function dateMinimum() {
   let dateInput = document.getElementById("reservation_date");
   dateInput.setAttribute("min", dateFormatee);
   return dateInput.value;
-} 
+}
 
 //retourne un tableau avec les horaires en string
 function formateHoraire() {
@@ -39,14 +39,13 @@ function formateHoraire() {
 
 //retourne le jour de la semaine en chiffre
 function jourSemaineNumber(date) {
-	let jourSemaineNb = new Date(date).getDay();
-	if (jourSemaineNb == 0) {
-		jourSemaineNb = 7;
-	}
-	jourSemaineNb = jourSemaineNb - 1;
-	return jourSemaineNb;
+  let jourSemaineNb = new Date(date).getDay();
+  if (jourSemaineNb == 0) {
+    jourSemaineNb = 7;
+  }
+  jourSemaineNb = jourSemaineNb - 1;
+  return jourSemaineNb;
 }
-
 
 function onChangeDate(event) {
   const date = dateMinimum();
@@ -56,28 +55,32 @@ function onChangeDate(event) {
   document.getElementById("champRadioMidi").style.display = "block";
   document.getElementById("champRadioSoir").style.display = "block";
 
-  while (radioContainerMidi.firstChild) {//supprime les champs radio midi
-    radioContainerMidi.removeChild(radioContainerMidi.firstChild);
+  const containerMidi = document.getElementById("radioContainerMidi"); // ID du conteneur où vous souhaitez ajouter les boutons radio
+  const containerSoir = document.getElementById("radioContainerSoir"); // ID du conteneur où vous souhaitez ajouter les boutons radio
+
+  while (containerMidi.firstChild) {
+    //supprime les champs radio midi
+    containerMidi.removeChild(containerMidi.firstChild);
   }
-  while (radioContainerSoir.firstChild) {//supprime les champs radio soir
-    radioContainerSoir.removeChild(radioContainerSoir.firstChild);
+  while (containerSoir.firstChild) {
+    //supprime les champs radio soir
+    containerSoir.removeChild(containerSoir.firstChild);
   }
 
-  let openMidi = arrayHoraire[jourSemaine][1];//recupere l'horaire d'ouverture midi
-  let closeMidi = arrayHoraire[jourSemaine][2];//recupere l'horaire de fermeture midi
-  let openSoir = arrayHoraire[jourSemaine][3];//recupere l'horaire d'ouverture soir
-  let closeSoir = arrayHoraire[jourSemaine][4];//recupere l'horaire de fermeture soir
+  let openMidi = arrayHoraire[jourSemaine][1]; //recupere l'horaire d'ouverture midi
+  let closeMidi = arrayHoraire[jourSemaine][2]; //recupere l'horaire de fermeture midi
+  let openSoir = arrayHoraire[jourSemaine][3]; //recupere l'horaire d'ouverture soir
+  let closeSoir = arrayHoraire[jourSemaine][4]; //recupere l'horaire de fermeture soir
 
   let nombreTotalMidi =
-    document.getElementsByClassName("js-nombre-total")[0].innerHTML;// affecte le nombre total de place midi
+    document.getElementsByClassName("js-nombre-total")[0].innerHTML; // affecte le nombre total de place midi
   let nombreTotalSoir =
-    document.getElementsByClassName("js-nombre-total")[0].innerHTML;// affecte le nombre total de place soir
-	
+    document.getElementsByClassName("js-nombre-total")[0].innerHTML; // affecte le nombre total de place soir
+
   let dates = document.querySelectorAll(".js-date-reservation");
   let nombres = document.querySelectorAll(".js-nombre-reservation");
   let heures = document.querySelectorAll(".js-heure-reservation");
-  let containerMidi = document.getElementById("radioContainerMidi"); // ID du conteneur où vous souhaitez ajouter les boutons radio
-  let containerSoir = document.getElementById("radioContainerSoir"); // ID du conteneur où vous souhaitez ajouter les boutons radio
+
   //Création des boutons radio
   let midiStartTime = new Date();
   let midiEndTime = new Date();
@@ -190,6 +193,7 @@ function onChangeDate(event) {
   if (closeSoir === "Fermé") {
     nombreTotalSoir = 0;
   }
+
   document.getElementById("reservation_visiteur_nbConviveM").innerText =
     nombreTotalMidi;
   document.getElementById("reservation_visiteur_nbConviveS").innerText =
@@ -197,7 +201,7 @@ function onChangeDate(event) {
 
   const inputElement = document.getElementById("reservation_heure");
   const radioButtons = document.querySelectorAll('input[name="timePeriod"]');
-  radioButtons.forEach(function (radioButton) {
+  radioButtons.forEach((radioButton) => {
     radioButton.addEventListener("change", function () {
       if (this.checked) {
         inputElement.value = this.value;
@@ -206,26 +210,30 @@ function onChangeDate(event) {
   });
 }
 
-document.querySelectorAll(".js-date").forEach(function (link) {
+document.querySelectorAll(".js-date").forEach((link) => {
   link.addEventListener("change", onChangeDate);
 });
-
-document.getElementById("champRadioMidi").style.display = "none";//rend invisible les champs radio midi
-document.getElementById("champRadioSoir").style.display = "none";//rend invisible les champs radio soir
+document.getElementById("reservation_visiteur_nbConviveM").innerText = "0";
+document.getElementById("reservation_visiteur_nbConviveS").innerText = "0";
+document.getElementById("champRadioMidi").style.display = "none"; //rend invisible les champs radio midi
+document.getElementById("champRadioSoir").style.display = "none"; //rend invisible les champs radio soir
+document.getElementById("reservation-date").readOnly = true; //rend le champ heure en lecture seule
 document.getElementById("reservation_heure").readOnly = true; //rend le champ heure en lecture seule
 
+const date = dateMinimum(); // appel la fonction dateMinimum pour recuperer la date minimum
+const allergenesList = document.querySelectorAll("#allergenes"); //recupere tous les allergenes
 
-const allergenesList = document.querySelectorAll("#allergenes");//recupere tous les allergenes
+for (let i = 0; i < allergenesList.length; i++) {
+  //parcours les allergenes
+  const allergene = allergenesList[i].innerHTML; //recupere les allergenes
+  const allergeneInputs = document.querySelectorAll("label"); //recupere tous les labels
 
-for (let i = 0; i < allergenesList.length; i++) {//parcours les allergenes
-  const allergene = allergenesList[i].innerHTML;//recupere les allergenes
-  const allergeneInputs = document.querySelectorAll("label");//recupere tous les labels
-
-  for (let j = 0; j < allergeneInputs.length; j++) { //parcours les labels
-    const allergeneInput = allergeneInputs[j];//recupere le label
+  for (let j = 0; j < allergeneInputs.length; j++) {
+    //parcours les labels
+    const allergeneInput = allergeneInputs[j]; //recupere le label
     if (allergeneInput.innerHTML === allergene) {
       const input = allergeneInput.htmlFor; //recupere l'id de l'input
-      document.getElementById(input).checked = true;//coche les allergenes
+      document.getElementById(input).checked = true; //coche les allergenes
     }
   }
 }

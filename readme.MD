@@ -17,7 +17,6 @@ Vous pouvez vérifier les pré requis avec la commande suivante :
 ```bash
 symfony check:requirements
 ```
-echo 'web: heroku-php-apache2 public/' > Procfile
 
 # Installation en local
 ## Cloner le projet

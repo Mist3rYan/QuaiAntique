@@ -5,15 +5,18 @@
 {% block body %}
 	<div class="container">
 		<h1 class="text-center">Réservation</h1>
-		<div class="row">
-			<h4 class="mt-4 text-center">Midi place(s) restante(s) :
-				<span id="reservation_visiteur_nbConviveM">{{ nbCouvert }}</span>
-			</h4>
+		<div class= "d-flex justify-content-around">
+		<div class="w-25 conteneurTransparent">
+			<h4 class="mt-4 text-center ">Midi</h4>
+			<p class="text-center" id="reservation_visiteur_nbConviveM">{{ nbCouvert }}</p>
 		</div>
-		<div class="row">
-			<h4 class="mt-4 text-center">Soir place(s) restante(s) :
-				<span id="reservation_visiteur_nbConviveS">{{ nbCouvert }}</span>
-			</h4>
+		<div>
+		<img src="{{ asset('images/assiette.png') }}" height="150" alt="Assiette">
+		</div>
+		<div class="w-25 conteneurTransparent">
+			<h4 class="mt-4 text-center">Soir</h4>
+			<p class="text-center" id="reservation_visiteur_nbConviveS">{{ nbCouvert }}</p>
+		</div>
 		</div>
 		{% if user %}
 			{{ form_start(reservationForm) }}
@@ -22,21 +25,35 @@
 			{{ form_row(reservationForm.visiteur_nb_convive,{'attr':{'value': user.getNombreConvive()}}) }}
 			{{ form_row(reservationForm.allergenes) }}
 			{{ form_row(reservationForm.date,{'attr': {'id': 'reservation-date'}}) }}
-			{{ form_row(reservationForm.heure) }}
+			{{ form_row(reservationForm.heure,{'attr': {'id': 'reservation-heure'}}) }}
+						<div class="row text-center mt-4" id="champRadioMidi">
+				<p>Midi:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerMidi"></span></p>
+			</div>
+			<div class="row text-center mt-4" id="champRadioSoir">
+				<p>Soir:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerSoir"></span></p>
+			</div>
 			{{ form_row(reservationForm.submit) }}
 			{{ form_end(reservationForm) }}
 			{% for allergene in user.getAllergenes %}
 				<span id="allergenes" class=" d-none">{{ allergene }}</span>
 			{% endfor %}
 		{% else %}
-			{{ form (reservationForm) }}
+			{{ form_start(reservationForm) }}
+			{{ form_row(reservationForm.visiteur_name) }}
+			{{ form_row(reservationForm.visiteur_email) }}
+			{{ form_row(reservationForm.visiteur_nb_convive) }}
+			{{ form_row(reservationForm.allergenes) }}
+			{{ form_row(reservationForm.date,{'attr': {'id': 'reservation-date'}}) }}
+			{{ form_row(reservationForm.heure,{'attr': {'id': 'reservation-heure'}}) }}
+						<div class="row text-center mt-4" id="champRadioMidi">
+				<p>Midi:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerMidi"></span></p>
+			</div>
+			<div class="row text-center mt-4" id="champRadioSoir">
+				<p>Soir:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerSoir"></span></p>
+			</div>
+			{{ form_row(reservationForm.submit) }}
+			{{ form_end(reservationForm) }}
 		{% endif %}
-		<div class="row text-center mt-4" id="champRadioMidi">
-			<p>Midi:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerMidi"></span></p>
-		</div>
-		<div class="row text-center mt-4" id="champRadioSoir">
-			<p>Soir:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerSoir"></span></p>
-		</div>
 		<span hidden class="js-nombre-total">{{ nbCouvert }}</span>
 		</div>
 			{% for reservation in reservations %}

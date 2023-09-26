@@ -21,29 +21,29 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add(
-            'visiteur_name',
-            TextType::class,
-            [
-                'attr' => [
-                    'class' => 'form-control',
-                    'minlength' => 5,
-                    'maxlength' => 180,
-                ],
-                'invalid_message' => 'Le nom n\a pas la bonne longueur',
-                'label' => 'Nom',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length([
-                        'min' => 5,
-                        'max' => 180,
-                    ]),
-                ],
-            ]
-        )
+            ->add(
+                'visiteur_name',
+                TextType::class,
+                [
+                    'attr' => [
+                        'class' => 'form-control',
+                        'minlength' => 5,
+                        'maxlength' => 180,
+                    ],
+                    'invalid_message' => 'Le nom n\a pas la bonne longueur',
+                    'label' => 'Nom',
+                    'label_attr' => [
+                        'class' => 'form-label mt-4'
+                    ],
+                    'constraints' => [
+                        new Assert\NotBlank(),
+                        new Assert\Length([
+                            'min' => 5,
+                            'max' => 180,
+                        ]),
+                    ],
+                ]
+            )
             ->add(
                 'visiteur_email',
                 EmailType::class,
@@ -93,7 +93,7 @@ class ReservationType extends AbstractType
                     'class' => 'form-control',
                 ]
             ])
-            ->add('date',DateType::class,[
+            ->add('date', DateType::class, [
                 'label' => 'Date',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
@@ -104,13 +104,15 @@ class ReservationType extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd'
             ])
-            ->add('heure',TimeType::class,[
+            ->add('heure', TimeType::class, [
                 'label' => 'Heure',
                 'label_attr' => [
-                    'class' => 'form-label mt-4'
+                    'class' => 'form-label mt-4',
+                    'style' => 'display: none'
                 ],
                 'attr' => [
                     'class' => 'form-control',
+                    'style' => 'display: none'
                 ],
                 'widget' => 'single_text'
             ])
@@ -119,8 +121,7 @@ class ReservationType extends AbstractType
                 'attr' => [
                     'class' => 'btn btnNavbar mt-4'
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
