@@ -1,0 +1,198 @@
+function onChangeDate(event) {
+  // Récupérer la date d'aujourd'hui
+  var aujourdHui = new Date();
+  var annee = aujourdHui.getFullYear();
+  var mois = String(aujourdHui.getMonth() + 1).padStart(2, "0");
+  var jour = String(aujourdHui.getDate()).padStart(2, "0");
+  var dateFormatee = annee + "-" + mois + "-" + jour;
+  // Récupérer la valeur du champ date (supposons qu'il ait l'ID "champDate")
+  let date = document.getElementById("reservation_date").value;
+  // Comparer les dates
+  if (date < dateFormatee) {
+    document.getElementById("reservation_date").value = dateFormatee;
+    date = dateFormatee;
+  }
+  document.getElementById("champRadioMidi").style.display = "block";
+  document.getElementById("champRadioSoir").style.display = "block";
+  while (radioContainerMidi.firstChild) {
+    radioContainerMidi.removeChild(radioContainerMidi.firstChild);
+  }
+  while (radioContainerSoir.firstChild) {
+    radioContainerSoir.removeChild(radioContainerSoir.firstChild);
+  }
+  let table = document.getElementById("maTable");
+  let tdArray = [];
+  for (var i = 1; i < table.rows.length; i++) {
+    var row = table.rows[i];
+    var rowArray = [];
+    // Parcourez toutes les cellules de chaque ligne
+    for (var j = 0; j < row.cells.length; j++) {
+      var cell = row.cells[j];
+      if (cell.innerHTML != "&nbsp;&nbsp;") {
+        // Ajoutez la valeur de la cellule au tableau
+        let buffer = cell.innerHTML;
+        buffer = buffer.replace(/[\s-]/g, "");
+        rowArray.push(buffer);
+      }
+    }
+    tdArray.push(rowArray);
+  }
+
+  let jourSemaine = new Date(date).getDay();
+  if (jourSemaine == 0) {
+    jourSemaine = 7;
+  }
+  jourSemaine = jourSemaine - 1;
+  let openMidi = tdArray[jourSemaine][1];
+  let closeMidi = tdArray[jourSemaine][2];
+  let openSoir = tdArray[jourSemaine][3];
+  let closeSoir = tdArray[jourSemaine][4];
+  let nombreTotalMidi =
+    document.getElementsByClassName("js-nombre-total")[0].innerHTML;
+  let nombreTotalSoir =
+    document.getElementsByClassName("js-nombre-total")[0].innerHTML;
+  let dates = document.querySelectorAll(".js-date-reservation");
+  let nombres = document.querySelectorAll(".js-nombre-reservation");
+  let heures = document.querySelectorAll(".js-heure-reservation");
+  let containerMidi = document.getElementById("radioContainerMidi"); // ID du conteneur où vous souhaitez ajouter les boutons radio
+  let containerSoir = document.getElementById("radioContainerSoir"); // ID du conteneur où vous souhaitez ajouter les boutons radio
+  //Création des boutons radio
+  let midiStartTime = new Date();
+  let midiEndTime = new Date();
+  let soirStartTime = new Date();
+  let soirEndTime = new Date();
+  // Convertir l'heure de début et de fin en objets Date
+  let midiDebutSplit = openMidi.split(":");
+  midiStartTime.setHours(
+    parseInt(midiDebutSplit[0], 10),
+    parseInt(midiDebutSplit[1], 10),
+    0
+  );
+  let midiFinSplit = closeMidi.split(":");
+  midiEndTime.setHours(
+    parseInt(midiFinSplit[0], 10),
+    parseInt(midiFinSplit[1], 10),
+    0
+  );
+  let soirDebutSplit = openSoir.split(":");
+  soirStartTime.setHours(
+    parseInt(soirDebutSplit[0], 10),
+    parseInt(soirDebutSplit[1], 10),
+    0
+  );
+  let soirFinSplit = closeSoir.split(":");
+  soirEndTime.setHours(
+    parseInt(soirFinSplit[0], 10),
+    parseInt(soirFinSplit[1], 10),
+    0
+  );
+  // Période de 15 minutes
+  let timeIncrement = 15;
+
+  let heureArray = [];
+  //Place restante midi et soir
+  for (let i = 0; i < dates.length; i++) {
+    let dateReservation = dates[i].innerText;
+    if (dateReservation === date) {
+      let nombre = nombres[i].innerText;
+      let heure = heures[i].innerText;
+      heureArray.push(heure);
+      if (closeMidi != "Fermé") {
+        if (heure >= openMidi && heure <= closeMidi) {
+          nombreTotalMidi = nombreTotalMidi - nombre;
+        }
+      }
+      if (closeSoir != "Fermé") {
+        if (heure >= openSoir && heure <= closeSoir) {
+          nombreTotalSoir = nombreTotalSoir - nombre;
+        }
+      }
+    }
+  }
+  while (midiStartTime < midiEndTime) {
+    let radioBtn = document.createElement("input");
+    radioBtn.type = "radio";
+    radioBtn.name = "timePeriod";
+    radioBtn.value = midiStartTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    let label = document.createElement("label");
+    label.textContent = midiStartTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    let heureCourante = midiStartTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    if (!heureArray.includes(heureCourante)) {
+      containerMidi.appendChild(radioBtn);
+      containerMidi.appendChild(label);
+    }
+    midiStartTime.setMinutes(midiStartTime.getMinutes() + timeIncrement);
+  }
+  while (soirStartTime < soirEndTime) {
+    let radioBtn = document.createElement("input");
+    radioBtn.type = "radio";
+    radioBtn.name = "timePeriod";
+    radioBtn.value = soirStartTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    let label = document.createElement("label");
+    label.textContent = soirStartTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    let heureCourante = soirStartTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    if (!heureArray.includes(heureCourante)) {
+      containerSoir.appendChild(radioBtn);
+      containerSoir.appendChild(label);
+    }
+    soirStartTime.setMinutes(soirStartTime.getMinutes() + timeIncrement);
+  }
+  if (closeMidi === "Fermé") {
+    nombreTotalMidi = 0;
+  }
+  if (closeSoir === "Fermé") {
+    nombreTotalSoir = 0;
+  }
+  document.getElementById("reservation_visiteur_nbConviveM").innerText =
+    nombreTotalMidi;
+  document.getElementById("reservation_visiteur_nbConviveS").innerText =
+    nombreTotalSoir;
+
+  let inputElement = document.getElementById("reservation_heure");
+  let radioButtons = document.querySelectorAll('input[name="timePeriod"]');
+  radioButtons.forEach(function (radioButton) {
+    radioButton.addEventListener("change", function () {
+      if (this.checked) {
+        inputElement.value = this.value;
+      }
+    });
+  });
+}
+
+document.querySelectorAll(".js-date").forEach(function (link) {
+  link.addEventListener("change", onChangeDate);
+});
+
+document.getElementById("champRadioMidi").style.display = "none";
+document.getElementById("champRadioSoir").style.display = "none";
+document.getElementById("reservation_heure").readOnly = true;
+let allergenesList = document.querySelectorAll("#allergenes");
+for (let i = 0; i < allergenesList.length; i++) {
+  let allergene = allergenesList[i].innerHTML;
+  let allergeneInputs = document.querySelectorAll("label");
+  for (let j = 0; j < allergeneInputs.length; j++) {
+    let allergeneInput = allergeneInputs[j];
+    if (allergeneInput.innerHTML === allergene) {
+      let input = allergeneInput.htmlFor;
+      document.getElementById(input).checked = true;
+    }
+  }
+}

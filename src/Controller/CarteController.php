@@ -6,7 +6,6 @@ use App\Repository\CalendrierRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\FormuleRepository;
 use App\Repository\MenuRepository;
-use App\Repository\PlatRepository;
 use App\Repository\ProduitRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
