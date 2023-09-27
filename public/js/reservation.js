@@ -201,6 +201,7 @@ function onChangeDate(event) {
 
   const inputElement = document.getElementById("reservation_heure");
   const radioButtons = document.querySelectorAll('input[name="timePeriod"]');
+
   radioButtons.forEach((radioButton) => {
     radioButton.addEventListener("change", function () {
       if (this.checked) {
@@ -213,14 +214,14 @@ function onChangeDate(event) {
 document.querySelectorAll(".js-date").forEach((link) => {
   link.addEventListener("change", onChangeDate);
 });
+
 document.getElementById("reservation_visiteur_nbConviveM").innerText = "0";
 document.getElementById("reservation_visiteur_nbConviveS").innerText = "0";
 document.getElementById("champRadioMidi").style.display = "none"; //rend invisible les champs radio midi
 document.getElementById("champRadioSoir").style.display = "none"; //rend invisible les champs radio soir
-document.getElementById("reservation-date").readOnly = true; //rend le champ heure en lecture seule
 document.getElementById("reservation_heure").readOnly = true; //rend le champ heure en lecture seule
 
-const date = dateMinimum(); // appel la fonction dateMinimum pour recuperer la date minimum
+const date = dateMinimum(); // appel la fonction dateMinimum pour recuperer la date minimum au chargement
 const allergenesList = document.querySelectorAll("#allergenes"); //recupere tous les allergenes
 
 for (let i = 0; i < allergenesList.length; i++) {

@@ -5,18 +5,21 @@
 {% block body %}
 	<div class="container">
 		<h1 class="text-center">Réservation</h1>
-		<div class= "d-flex justify-content-around">
-		<div class="w-25 conteneurTransparent">
-			<h4 class="mt-4 text-center ">Midi</h4>
-			<p class="text-center" id="reservation_visiteur_nbConviveM">{{ nbCouvert }}</p>
-		</div>
-		<div>
-		<img src="{{ asset('images/assiette.png') }}" height="150" alt="Assiette">
-		</div>
-		<div class="w-25 conteneurTransparent">
-			<h4 class="mt-4 text-center">Soir</h4>
-			<p class="text-center" id="reservation_visiteur_nbConviveS">{{ nbCouvert }}</p>
-		</div>
+		<div class="mt-4 d-flex justify-content-around">
+			<div class="w-25 h-50 conteneurTransparent">
+				<h4 class="text-center">Midi</h4>
+				<h4 class="text-center" id="reservation_visiteur_nbConviveM">{{ nbCouvert }}</h4>
+			</div>
+			<div>
+				<img id="imageCentrale" src="{{ asset('images/assiette.png') }}" height="150" alt="Assiette">
+				<p class="text-center">
+					<a class="nav-link" href="{{ path('app_reservation')}}" id="likeBtn">Cliquez-moi !</a>
+				</p>
+			</div>
+			<div class="w-25 h-50 conteneurTransparent">
+				<h4 class="text-center">Soir</h4>
+				<h4 class="text-center" id="reservation_visiteur_nbConviveS">{{ nbCouvert }}</h4>
+			</div>
 		</div>
 		{% if user %}
 			{{ form_start(reservationForm) }}
@@ -26,11 +29,13 @@
 			{{ form_row(reservationForm.allergenes) }}
 			{{ form_row(reservationForm.date,{'attr': {'id': 'reservation-date'}}) }}
 			{{ form_row(reservationForm.heure,{'attr': {'id': 'reservation-heure'}}) }}
-						<div class="row text-center mt-4" id="champRadioMidi">
-				<p>Midi:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerMidi"></span></p>
+			<div class="row text-center mt-4" id="champRadioMidi">
+				<p>Midi:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerMidi"></span>
+				</p>
 			</div>
 			<div class="row text-center mt-4" id="champRadioSoir">
-				<p>Soir:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerSoir"></span></p>
+				<p>Soir:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerSoir"></span>
+				</p>
 			</div>
 			{{ form_row(reservationForm.submit) }}
 			{{ form_end(reservationForm) }}
@@ -45,27 +50,40 @@
 			{{ form_row(reservationForm.allergenes) }}
 			{{ form_row(reservationForm.date,{'attr': {'id': 'reservation-date'}}) }}
 			{{ form_row(reservationForm.heure,{'attr': {'id': 'reservation-heure'}}) }}
-						<div class="row text-center mt-4" id="champRadioMidi">
-				<p>Midi:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerMidi"></span></p>
+			<div class="row text-center mt-4" id="champRadioMidi">
+				<p>Midi:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerMidi"></span>
+				</p>
 			</div>
 			<div class="row text-center mt-4" id="champRadioSoir">
-				<p>Soir:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerSoir"></span></p>
+				<p>Soir:&nbsp;&nbsp;&nbsp;&nbsp;<span id="radioContainerSoir"></span>
+				</p>
 			</div>
 			{{ form_row(reservationForm.submit) }}
 			{{ form_end(reservationForm) }}
 		{% endif %}
 		<span hidden class="js-nombre-total">{{ nbCouvert }}</span>
+	</div>
+	{% for reservation in reservations %}
+		<div hidden class="text-center">
+			<span class="js-date-reservation">{{ reservation.getDate|date('Y-m-d')}}</span>
+			<span class="js-heure-reservation">{{ reservation.getHeure|date('H:i')}}</span>
+			<span class="js-nombre-reservation">{{ reservation.getVisiteurNbConvive()}}</span>
 		</div>
-			{% for reservation in reservations %}
-				<div hidden class="text-center">
-					<span class="js-date-reservation">{{ reservation.getDate|date('Y-m-d')}}</span>
-					<span class="js-heure-reservation">{{ reservation.getHeure|date('H:i')}}</span>
-					<span class="js-nombre-reservation">{{ reservation.getVisiteurNbConvive()}}</span>
-				</div>
-			{% endfor %}
-		</div>
-	{% endblock %}
-{% block javascripts %}
+	{% endfor %}
+</div>{% endblock %}{% block javascripts %}
 {{ encore_entry_script_tags('app') }}
 <script src="{{ asset('js/reservation.js') }}"></script>
-{% endblock %}
+<script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+	let image = false;
+function onClicBtnLike(event) {
+event.preventDefault();
+const url = this.href;
+axios.get(url).then(function (response) {
+image == false ? document.getElementById('imageCentrale').src = "{{ asset('images/assiette2.png') }}" : document.getElementById('imageCentrale').src = "{{ asset('images/assiette.png') }}";
+image == false ? image = true : image = false;
+})
+}
+// Ajoutez un gestionnaire d'événement à chaque élément avec l'ID "LIKE"
+document.querySelector("#likeBtn").addEventListener('click', onClicBtnLike);
+</script>{% endblock %}
