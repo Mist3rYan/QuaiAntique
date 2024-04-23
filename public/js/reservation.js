@@ -234,7 +234,7 @@ for (let i = 0; i < allergenesList.length; i++) {
     const allergeneInput = allergeneInputs[j]; //recupere le label
     if (allergeneInput.innerHTML === allergene) {
       const input = allergeneInput.htmlFor; //recupere l'id de l'input
-      document.getElementById(input).checked = true; //coche les allergenes
+      document.getElementById(input).checked = true; 
     }
   }
 }

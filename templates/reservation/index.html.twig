@@ -72,7 +72,6 @@
 	{% endfor %}
 </div>{% endblock %}{% block javascripts %}
 {{ encore_entry_script_tags('app') }}
-<script src="{{ asset('js/reservation.js') }}"></script>
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 <script>
 	let image = false;
@@ -86,4 +85,5 @@ image == false ? image = true : image = false;
 }
 // Ajoutez un gestionnaire d'événement à chaque élément avec l'ID "LIKE"
 document.querySelector("#likeBtn").addEventListener('click', onClicBtnLike);
-</script>{% endblock %}
+</script>
+<script src="{{ asset('js/reservation.js') }}"></script>{% endblock %}
